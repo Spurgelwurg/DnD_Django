@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Site{% endblock %}</title>
+</head>
+<body>
+    <form method="post" action="{% url 'game:logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <nav>
+        <!-- Navigation links -->
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        {% comment %} <p>Footer content</p> {% endcomment %}
+    </footer>
+</body>
