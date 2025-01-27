@@ -1,56 +1,66 @@
-from pyexpat import model
-from typing import Any
-from django import views
-from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.views import View, generic
-from django.contrib.auth import authenticate, login
+from django.views import generic
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
+from .forms import RegisterForm
+
+class IndexView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "game/index.html"
 
 
-from.models import Empty
-
-class IndexView(LoginRequiredMixin, View):
-    model = Empty
-    def get(self, request: Any) -> HttpResponse:
-        return render(request,  "game/index.html")
-
-
-class LoginView(generic.ListView):
-    model = Empty
+class LoginView(generic.TemplateView):
     template_name = "game/login.html"
 
     def post(self, request: HttpRequest) -> HttpResponse:
         username = request.POST.get('username')
         password = request.POST.get('password')
+        
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             return redirect('game:index')
         else:
-            return render(request, 'game/login.html', {'error': 'Invalid username or password'})
+            return render(request, "game/login.html", {'error': 'Invalid username or password'})
         
 
-class RegisterView(View):
+class RegisterView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        return render(request, 'game/register.html')
+        # roles = DnDUser.ROLE_CHOICES
+        form = RegisterForm(request.POST)
+        return render(request, 'game/register.html', {'form': form})
 
-    def post(self, request: HttpRequest) -> HttpResponse:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        email = request.POST.get('email')
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')  # Redirect to login page after successful registration
+        return render(request, 'register.html', {'form': form})
+    
         
-        if User.objects.filter(username=username).exists():
-            return render(request, 'game/register.html', {'error': 'Username already exists'})
-        
-        user = User.objects.create_user(username=str(username), password=password, email=email)
-        user.save()
-        return redirect('login')
+
     
 
 def logout_view(request):
     logout(request)
     return redirect('game:login')
+
+
+
+# View: The base class for all views. It doesn't provide any specific functionality but can be extended to create custom views.
+# TemplateView: Renders a template. It is used when you need to render a template without any specific context.
+# RedirectView: Redirects to a specific URL. It is used when you need to redirect users to another URL.
+# DetailView: Renders a detail page for a single object. It is used when you need to display details of a single object.
+# ListView: Renders a list of objects. It is used when you need to display a list of objects.
+# CreateView: Displays a form for creating a new object and saves the object when the form is submitted.
+# UpdateView: Displays a form for updating an existing object and saves the changes when the form is submitted.
+# DeleteView: Displays a confirmation page and deletes an object when the confirmation is received.
+# FormView: Displays a form and processes the form submission.
+# ArchiveIndexView: Displays a list of objects grouped by date.
+# YearArchiveView: Displays a list of objects for a specific year.
+# MonthArchiveView: Displays a list of objects for a specific month.
+# WeekArchiveView: Displays a list of objects for a specific week.
+# DayArchiveView: Displays a list of objects for a specific day.
+# TodayArchiveView: Displays a list of objects for the current day.
+# DateDetailView: Displays a detail page for a single object identified by a date.
