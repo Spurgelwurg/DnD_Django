@@ -14,4 +14,5 @@ register = template.Library()
 
 @register.filter
 def debug_print(value):
-    return dir(value)
+    print(dir(value))
+    

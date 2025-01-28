@@ -1,18 +1,31 @@
 {% extends "game/base.html" %}
 {% load custom_tags %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Register{% endblock %}
+
+{% block style %}
+    {{ block.super }}
+    .centered-element {
+        text-align: center;
+        padding: 5px;
+    }
+{% endblock%}
 
 {% block content %}
 <div class="container">
     <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>   
+    {% for field in form %}
+        <div>
+            {{ field.label_tag }}
+            <div class="centered-element">
+                {{ field }}
+            </div>           
+        </div>
+        {% comment %} {{ field|debug_print }} {% endcomment %}
+    {% endfor %}
+    <button type="submit">Register</button>
+    {% comment %} <a href="{% url 'login' %}" class="btn btn-secondary">Return to Login</a> {% endcomment %}
 
   
-    {{ form|debug_print }}
 </div>
 {% endblock %}

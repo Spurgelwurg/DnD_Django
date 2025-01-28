@@ -1,9 +1,14 @@
 from django.http import HttpRequest, HttpResponse
 from django.views import generic
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout, authenticate, login
-from .forms import RegisterForm
+from django.views.generic.edit import FormMixin
+from game.forms import RegisterForm
+
+
+from.models import DnDUser
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = "game/index.html"
@@ -27,7 +32,6 @@ class LoginView(generic.TemplateView):
 
 class RegisterView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        # roles = DnDUser.ROLE_CHOICES
         form = RegisterForm(request.POST)
         return render(request, 'game/register.html', {'form': form})
 
