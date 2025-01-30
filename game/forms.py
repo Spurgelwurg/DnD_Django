@@ -14,3 +14,10 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = DnDUser
         fields = ['username', 'email', 'role']
+    
+    # Reroder the default form fields
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        keys = list(self.fields.keys())
+        new_order = keys[0:1] + keys[-2:] + keys[1:-2]
+        self.fields = {key: self.fields[key] for key in new_order}
