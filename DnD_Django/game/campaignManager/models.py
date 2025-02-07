@@ -52,3 +52,18 @@ class Task(models.Model):
     def __str__(self):
         return self.title
     
+class Note(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    campaign = models.ForeignKey(Campaign, related_name='notes', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+class File(models.Model):
+    file = models.FileField(upload_to='campaign_files/')
+    description = models.TextField()
+    campaign = models.ForeignKey(Campaign, related_name='files', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.file.name

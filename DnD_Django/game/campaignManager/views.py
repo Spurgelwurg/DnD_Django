@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.views import generic
 
-from.models import Empty
+from.models import Empty, Campaign, NPC, Enemy, Location, Event, Task, Note, File
 
 class IndexView(generic.ListView):
     model = Empty
@@ -13,7 +13,7 @@ class IndexView(generic.ListView):
 #     return HttpResponse("Hello, world!")
 
 from django.shortcuts import render, redirect
-from .forms import CampaignForm
+from .forms import CampaignForm, NPCForm, EnemyForm, LocationForm, EventForm, TaskForm, NoteForm, FileForm
 
 def create_campaign(request):
     if request.method == 'POST':
@@ -23,7 +23,7 @@ def create_campaign(request):
             return redirect('campaign_list')  # Redirect to a list of campaigns or another page
     else:
         form = CampaignForm()
-    return render(request, 'game/create_campaign.html', {'form': form})
+    return render(request, 'game/createCampaign.html', {'form': form})
 
 def create_npc(request):
     if request.method == 'POST':
@@ -33,7 +33,7 @@ def create_npc(request):
             return redirect('npc_list')  # Redirect to a list of NPCs or another page
     else:
         form = NPCForm()
-    return render(request, 'game/create_npc.html', {'form': form})
+    return render(request, 'game/createNPC.html', {'form': form})
 
 def create_enemy(request):
     if request.method == 'POST':
@@ -43,7 +43,7 @@ def create_enemy(request):
             return redirect('enemy_list')  # Redirect to a list of enemies or another page
     else:
         form = EnemyForm()
-    return render(request, 'game/create_enemy.html', {'form': form})
+    return render(request, 'game/createEnemy.html', {'form': form})
 
 def create_location(request):
     if request.method == 'POST':
@@ -53,7 +53,7 @@ def create_location(request):
             return redirect('location_list')  # Redirect to a list of locations or another page
     else:
         form = LocationForm()
-    return render(request, 'game/create_location.html', {'form': form})
+    return render(request, 'game/createLocation.html', {'form': form})
 
 def create_event(request):
     if request.method == 'POST':
@@ -63,7 +63,7 @@ def create_event(request):
             return redirect('event_list')  # Redirect to a list of events or another page
     else:
         form = EventForm()
-    return render(request, 'game/create_event.html', {'form': form})
+    return render(request, 'game/createEvent.html', {'form': form})
 
 def create_task(request):
     if request.method == 'POST':
@@ -74,8 +74,38 @@ def create_task(request):
         
     else:
         form = TaskForm()
-    return render(request, 'game/create_task.html', {'form': form})
+    return render(request, 'game/createTask.html', {'form': form})
 
 def task_list(request):
     tasks = Task.objects.all()
-    return render(request, 'game/task_list.html', {'tasks': tasks})
+    return render(request, 'game/createTask.html', {'tasks': tasks})
+
+def create_note(request):
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('note_list')
+        
+    else:
+        form = NoteForm()
+    return render(request, 'game/createNote.html', {'form': form})
+
+def create_file(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('file_list')
+        
+    else:
+        form = FileForm()
+    return render(request, 'game/createFile.html', {'form': form})
+
+def note_list(request):
+    notes = Note.objects.all()
+    return render(request, 'game/createNote.html', {'notes': notes})
+
+def file_list(request):
+    files = File.objects.all()
+    return render(request, 'game/createFile.html', {'files': files})

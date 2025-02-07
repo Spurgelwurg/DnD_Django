@@ -11,6 +11,10 @@ urlpatterns = [
      path('create_location/', views.create_location, name='create_location'),
      path('create_event/', views.create_event, name='create_event'),
      path('create_task/', views.create_task, name='create_task'),
-     path('tasks/', views.task_list(), name='task_list'),
+     path('task_list/', views.task_list, name='task_list'),
+     path('create_notes/', views.create_notes, name='create_notes'),
+     path('create_file/', views.create_file, name='create_file'),
+     path('notes/', views.notes_list, name='notes_list'),
+     path('files/', views.file_list, name='file_list'),
      # path('simple/', views.simple_view, name='simple_view'),s
 ]

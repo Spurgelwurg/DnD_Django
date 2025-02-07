@@ -30,3 +30,13 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'is_completed', 'Campaign']
+
+class NoteForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['title', 'content', 'campaign']
+
+class FileForm(forms.ModelForm):
+    class Meta:
+        model = File
+        fields = ['file','description', 'campaign']
