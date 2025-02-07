@@ -64,3 +64,18 @@ def create_event(request):
     else:
         form = EventForm()
     return render(request, 'game/create_event.html', {'form': form})
+
+def create_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list')
+        
+    else:
+        form = TaskForm()
+    return render(request, 'game/create_task.html', {'form': form})
+
+def task_list(request):
+    tasks = Task.objects.all()
+    return render(request, 'game/task_list.html', {'tasks': tasks})

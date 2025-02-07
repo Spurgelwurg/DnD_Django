@@ -10,5 +10,7 @@ urlpatterns = [
      path('create_enemy/', views.create_enemy, name='create_enemy'),
      path('create_location/', views.create_location, name='create_location'),
      path('create_event/', views.create_event, name='create_event'),
+     path('create_task/', views.create_task, name='create_task'),
+     path('tasks/', views.task_list(), name='task_list'),
      # path('simple/', views.simple_view, name='simple_view'),s
 ]
