@@ -1,5 +1,5 @@
 from django import forms
-from .models import Campaign
+from .models import Campaign, NPC, Enemy, Location, Event, Task, Note, File
 
 class CampaignForm(forms.ModelForm):
     class Meta:
