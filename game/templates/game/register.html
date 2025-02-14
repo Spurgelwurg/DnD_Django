@@ -47,30 +47,20 @@
                 {{ form.non_field_errors }}
             {% endif %}
             <div>
-                {{ form.username.label_tag }}
-                {{ form.username }}
-                {% if form.username.errors and form_submitted %}
-                    {{ form.username.errors }}
-                {% endif %}
+                {% for field in form %}
+                <div>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <div style="color:red;">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
             </div>
-            <div>
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
-                {% if form.password1.errors and form_submitted %}
-                    {{ form.password1.errors }}
-                {% endif %}
-            </div>
-            <div>
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
-                {% if form.password2.errors and form_submitted %}
-                    {{ form.password2.errors }}
-                {% endif %}
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; height: 50px; margin-top: 20pt;">
-                <button type="button" onclick="window.location.href='{% url 'game:login' %}'" style="width: 50px;  text-align: left;">←</button>
-                <button type="submit" style="flex: 1; text-align: center; margin-left: auto; margin-right: auto;">Register</button>
-            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; height: 50px; margin-top: 20pt;">
+            <button type="button" onclick="window.location.href='{% url 'game:login' %}'" style="width: 50px;  text-align: left;">←</button>
+            <button type="submit" style="flex: 1; text-align: center; margin-left: auto; margin-right: auto;">Register</button>
         </div>
     </form>    
 </div>
