@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Buttons</title>
+</head>
+<body>
+
+    <h1>Navigation</h1>
+
+    <a href="{% url 'home' %}">  <button>Home</button>
+    </a>
+
+    <a href="{% url 'about' %}"> <button>About</button>
+    </a>
+
+    <a href="{% url 'contact' %}"> <button>Contact</button>
+    </a>
+
+
+    <button onclick="navigateTo('home')">Home (JS)</button>
+    <button onclick="navigateTo('about')">About (JS)</button>
+    <button onclick="navigateTo('contact')">Contact (JS)</button>
+
+    <script>
+        function navigateTo(page) {
+            // Construct the URL using URL reversing if needed.  This example assumes your URLs are
+            // simple.  For more complex URLs with parameters, use Django's URL reversing in your JS.
+            let url = "/" + page + "/"; // Or use "{% url 'view_name' %}" in a hidden input and access it here.
+
+            window.location.href = url;
+        }
+    </script>
+
+
+</body>
+</html>

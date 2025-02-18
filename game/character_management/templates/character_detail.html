@@ -1,0 +1,13 @@
+<meta charset="UTF-8">
+
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{{ character.name }}</h2>
+  <p>Rasse: {{ character.race.name }}</p>
+  <p>Klasse: {{ character.character_class.name }}</p>
+  <p>Stärke: {{ character.strength }}</p>
+  <p>Geschicklichkeit: {{ character.dexterity }}</p>
+  <p>Intelligenz: {{ character.intelligence }}</p>
+  <a href="{% url 'character_create' %}">Neuen Charakter erstellen</a>
+{% endblock %}
