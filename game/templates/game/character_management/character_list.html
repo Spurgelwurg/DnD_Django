@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Characters</h1>
+
+<a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
+
+{% if characters %}
+    <ul class="character-list">
+        {% for character in characters %}
+            <li>
+                <a href="{% url 'game:character_management:character_detail' character.id %}">
+                    {{ character.name }} - Level {{ character.level }} {{ character.character_class }} {{ character.race }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No characters available. Create one!</p>
+{% endif %}
+{% endblock %}

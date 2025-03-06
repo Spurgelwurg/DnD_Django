@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create Character</h1>
+
+<div class="dice-roller">
+    <h3>Dice Roller</h3>
+    <form action="{% url 'game:character_management:roll_dice' %}" method="post">
+        {% csrf_token %}
+        {{ dice_form.as_p }}
+        <button type="submit">Roll</button>
+    </form>
+    <a href="{% url 'game:character_management:roll_ability_scores' %}" class="button">Roll Ability Scores</a>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-section">
+        <h3>Basic Info</h3>
+        <label for="id_name">Name:</label>
+        {{ form.name }}
+    </div>
+
+    <div class="form-section">
+        <h3>Race</h3>
+        <label for="id_race">Race:</label>
+        <select name="race" id="id_race" onchange="getSubraces()">
+            <option value="">Select a race</option>
+            {% for race in races %}
+                <option value="{{ race.id }}">{{ race.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div id="race_details" class="race-details"></div>
+
+        <label for="id_subrace">Subrace:</label>
+        <select name="subrace" id="id_subrace">
+            <option value="">Select a race first</option>
+        </select>
+    </div>
+
+    <div class="form-section">
+        <h3>Class</h3>
+        <label for="id_character_class">Class:</label>
+        <select name="character_class" id="id_character_class">
+            <option value="">Select a class</option>
+            {% for class_option in classes %}
+                <option value="{{ class_option.id }}">{{ class_option.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div id="class_details" class="class-details"></div>
+    </div>
+
+    <div class="form-section">
+        <h3>Ability Scores</h3>
+        <div class="ability-scores">
+            <div>
+                <label for="id_strength">Strength:</label>
+                {{ form.strength }}
+            </div>
+            <div>
+                <label for="id_dexterity">Dexterity:</label>
+                {{ form.dexterity }}
+            </div>
+            <div>
+                <label for="id_constitution">Constitution:</label>
+                {{ form.constitution }}
+            </div>
+            <div>
+                <label for="id_intelligence">Intelligence:</label>
+                {{ form.intelligence }}
+            </div>
+            <div>
+                <label for="id_wisdom">Wisdom:</label>
+                {{ form.wisdom }}
+            </div>
+            <div>
+                <label for="id_charisma">Charisma:</label>
+                {{ form.charisma }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3>Additional Info</h3>
+        <div>
+            <label for="id_level">Level:</label>
+            {{ form.level }}
+        </div>
+        <div>
+            <label for="id_description">Description:</label>
+            {{ form.description }}
+        </div>
+        <div>
+            <label for="id_equipment">Equipment:</label>
+            {{ form.equipment }}
+        </div>
+        <div>
+            <label for="id_inventory">Inventory:</label>
+            {{ form.inventory }}
+        </div>
+        <div>
+            <label for="id_spells">Spells:</label>
+            {{ form.spells }}
+        </div>
+    </div>
+
+    <button type="submit">Create Character</button>
+</form>
+
+<script>
+function getSubraces() {
+    const raceId = document.getElementById('id_race').value;
+    if (raceId) {
+        fetch(`{% url 'game:character_management:get_subrace' %}?race_id=${raceId}`)
+            .then(response => response.json())
+            .then(data => {
+                const subraceSelect = document.getElementById('id_subrace');
+                subraceSelect.innerHTML = '<option value="">Select a subrace</option>';
+                data.forEach(subrace => {
+                    const option = document.createElement('option');
+                    option.value = subrace.id;
+                    option.textContent = subrace.name;
+                    subraceSelect.appendChild(option);
+                });
+            });
+    }
+}
+</script>
+{% endblock %}

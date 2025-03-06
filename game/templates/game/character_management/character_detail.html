@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ character.name }}</h1>
+
+<div class="character-details">
+    <div class="basic-info">
+        <p><strong>Race:</strong> {{ character.race }}{% if character.subrace %} ({{ character.subrace }}){% endif %}</p>
+        <p><strong>Class:</strong> {{ character.character_class }}</p>
+        <p><strong>Level:</strong> {{ character.level }}</p>
+    </div>
+
+    <div class="ability-scores">
+        <h3>Ability Scores</h3>
+        <ul>
+            <li><strong>Strength:</strong> {{ character.strength }} ({{ character.get_ability_modifier|default:"0" }})</li>
+            <li><strong>Dexterity:</strong> {{ character.dexterity }} ({{ character.get_ability_modifier|default:"0" }})</li>
+            <li><strong>Constitution:</strong> {{ character.constitution }} ({{ character.get_ability_modifier|default:"0" }})</li>
+            <li><strong>Intelligence:</strong> {{ character.intelligence }} ({{ character.get_ability_modifier|default:"0" }})</li>
+            <li><strong>Wisdom:</strong> {{ character.wisdom }} ({{ character.get_ability_modifier|default:"0" }})</li>
+            <li><strong>Charisma:</strong> {{ character.charisma }} ({{ character.get_ability_modifier|default:"0" }})</li>
+        </ul>
+    </div>
+
+    {% if character.description %}
+    <div class="description">
+        <h3>Description</h3>
+        <p>{{ character.description|linebreaks }}</p>
+    </div>
+    {% endif %}
+
+    {% if character.equipment %}
+    <div class="equipment">
+        <h3>Equipment</h3>
+        <p>{{ character.equipment|linebreaks }}</p>
+    </div>
+    {% endif %}
+
+    {% if character.inventory %}
+    <div class="inventory">
+        <h3>Inventory</h3>
+        <p>{{ character.inventory|linebreaks }}</p>
+    </div>
+    {% endif %}
+
+    {% if character.spells %}
+    <div class="spells">
+        <h3>Spells</h3>
+        <p>{{ character.spells|linebreaks }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<a href="{% url 'game:character_management:character_list' %}">Back to Character List</a>
+{% endblock %}
