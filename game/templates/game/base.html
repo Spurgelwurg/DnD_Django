@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}DnD Django{% endblock %}</title>
+    
+    {% block style %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;        
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            align-items: center;
+            justify-content: center;
+        }
+        input {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin: 5px 0 5px 0;
+            padding: 12px 16px;
+            border-radius: 5px;
+            max-width: 200px;
+            cursor: pointer;
+            font-size: larger;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            align-items: left;
+            text-align: left;
+        }
+        .field-error {
+            border-color: red;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'game:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% endif %}
+    <nav>
+        <!-- Navigation links -->
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        {% comment %} <p>Footer content</p> {% endcomment %}
+    </footer>
+</body>
