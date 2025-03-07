@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload File</title>
+    <subtitle>File List</subtitle>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+    <h1>File List</h1>
+    <ul>
+        {% for file in files %}
+            <li>{{ file.file.name }} - {{ file.description }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Task</title>
+    <subtitle>Task List</subtitle>
+</head>
+<body>
+    <h1>Create Task</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <h1>Task List</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.title }} - {{ task.description }} - {% if task.completed %}Completed{% else %}Not Completed{% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
