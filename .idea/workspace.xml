@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="zwischencommit">
-      <change afterPath="$PROJECT_DIR$/game/character_management/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/character_management/dice.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/character_management/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/character_management/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/character_management/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/management/commands/populate_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/ability_scores.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/dice_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/templates/game/character_management/dice_result.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DnD_Django/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DnD_Django/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/templates/game/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/urls.py" afterDir="false" />
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(2.0): implement character_management">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +42,16 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Spurgelwurg/DnD_Django.git&quot;,
     &quot;accountId&quot;: &quot;8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Spurgelwurg&quot;,
+    &quot;repository&quot;: &quot;DnD_Django&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -68,28 +62,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.character_create.html.executor": "Run",
-    "JavaScript Debug.character_detail.html.executor": "Run",
-    "JavaScript Debug.character_overview.html.executor": "Run",
-    "JavaScript Debug.index.html.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "character__management__2.0",
-    "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.character_create.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.character_detail.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.character_overview.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#9 on character__management__2.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jashameusel/PycharmProjects/DnD_Django/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates" />
@@ -149,7 +143,8 @@
       <workItem from="1740734901261" duration="13000" />
       <workItem from="1740736069988" duration="1225000" />
       <workItem from="1741270776283" duration="1236000" />
-      <workItem from="1741272019127" duration="7939000" />
+      <workItem from="1741272019127" duration="8173000" />
+      <workItem from="1741335756970" duration="2725000" />
     </task>
     <task id="LOCAL-00001" summary="add some classes">
       <option name="closed" value="true" />
@@ -167,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741270875481</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat(2.0): implement character_management">
+      <option name="closed" value="true" />
+      <created>1741281470690</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741281470690</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,6 +191,7 @@
     <MESSAGE value="stash to change branche" />
     <MESSAGE value="add some classes" />
     <MESSAGE value="zwischencommit" />
-    <option name="LAST_COMMIT_MESSAGE" value="zwischencommit" />
+    <MESSAGE value="feat(2.0): implement character_management" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(2.0): implement character_management" />
   </component>
 </project>

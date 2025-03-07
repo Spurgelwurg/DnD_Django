@@ -18,7 +18,7 @@ def character_create(request):
         form = CharacterForm(request.POST)
         if form.is_valid():
             character = form.save()
-            return redirect('character_management:character_detail', character_id=character.id)
+            return redirect('game:character_management:character_detail', character_id=character.id)
     else:
         form = CharacterForm()
 
@@ -67,3 +67,27 @@ def get_subrace(request):
     race_id = request.GET.get('race_id')
     subraces = SubRace.objects.filter(parent_race_id=race_id).values('id', 'name')
     return JsonResponse(list(subraces), safe=False)
+
+
+
+
+
+###─────────▄──────────────▄
+###────────▌▒█───────────▄▀▒▌
+###────────▌▒▒▀▄───────▄▀▒▒▒▐
+###───────▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
+###─────▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
+###───▄▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀██▀▒▌
+###──▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌
+###──▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
+###─▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌
+###─▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
+###─▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐
+###▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒▒▒░░░░░░▒▒▒▒▌
+###▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐
+###─▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
+###─▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐
+###──▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌
+###────▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
+###───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
+###──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀
