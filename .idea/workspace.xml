@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(2.0): implement character_management">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(9): fix dice apply">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/character_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/character_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="character-management" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,22 +42,23 @@
     &quot;assignee&quot;: &quot;JashaPierre&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Spurgelwurg/DnD_Django.git&quot;,
-    &quot;accountId&quot;: &quot;8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Spurgelwurg/DnD_Django.git",
+    "accountId": "8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Spurgelwurg&quot;,
-    &quot;repository&quot;: &quot;DnD_Django&quot;
-  }
-}</component>
+    "owner": "Spurgelwurg",
+    "repository": "DnD_Django"
+  },
+  "highlightDiffLinesInEditor": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -145,6 +150,7 @@
       <workItem from="1741270776283" duration="1236000" />
       <workItem from="1741272019127" duration="8173000" />
       <workItem from="1741335756970" duration="2725000" />
+      <workItem from="1741340441476" duration="8450000" />
     </task>
     <task id="LOCAL-00001" summary="add some classes">
       <option name="closed" value="true" />
@@ -170,7 +176,31 @@
       <option name="project" value="LOCAL" />
       <updated>1741281470690</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat(2.0): fix namespace and implement populate_data.py">
+      <option name="closed" value="true" />
+      <created>1741341606658</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741341606658</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(dev): merge login and character_management together">
+      <option name="closed" value="true" />
+      <created>1741342323790</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741342323790</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(9): fix dice apply">
+      <option name="closed" value="true" />
+      <created>1741603177182</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741603177182</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +222,9 @@
     <MESSAGE value="add some classes" />
     <MESSAGE value="zwischencommit" />
     <MESSAGE value="feat(2.0): implement character_management" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(2.0): implement character_management" />
+    <MESSAGE value="feat(2.0): fix namespace and implement populate_data.py" />
+    <MESSAGE value="feat(dev): merge login and character_management together" />
+    <MESSAGE value="feat(9): fix dice apply" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(9): fix dice apply" />
   </component>
 </project>

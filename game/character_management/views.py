@@ -85,6 +85,39 @@ def character_edit(request, character_id):
         'character': character
     })
 
+def get_race_details(request):
+    race_id = request.GET.get('race_id')
+    try:
+        race = Race.objects.get(id=race_id)
+        data = {
+            'name': race.name,
+            'description': race.description,
+            'ability_scores': race.ability_scores,
+            'traits': race.traits,
+            'age': race.age,
+            'size': race.size,
+            'speed': race.speed,
+            'languages': race.languages,
+        }
+        return JsonResponse(data)
+    except Race.DoesNotExist:
+        return JsonResponse({'error': 'Race not found'}, status=404)
+
+def get_class_details(request):
+    class_id = request.GET.get('class_id')
+    try:
+        character_class = CharacterClass.objects.get(id=class_id)
+        data = {
+            'name': character_class.name,
+            'description': character_class.description,
+            'primary_ability': character_class.primary_ability,
+            'hit_die': character_class.hit_die,
+            'saving_throws': character_class.saving_throws,
+        }
+        return JsonResponse(data)
+    except CharacterClass.DoesNotExist:
+        return JsonResponse({'error': 'Class not found'}, status=404)
+
 
 def character_delete(request, character_id):
     character = get_object_or_404(Character, id=character_id)
