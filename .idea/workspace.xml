@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(9): fix character_form.html">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix base.html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/ability_scores.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +58,9 @@
   },
   "highlightDiffLinesInEditor": true
 }]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -63,28 +69,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.character_create.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.character_detail.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.character_overview.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#9 on character__management__2.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jashameusel/PycharmProjects/DnD_Django/templates&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.character_create.html.executor": "Run",
+    "JavaScript Debug.character_detail.html.executor": "Run",
+    "JavaScript Debug.character_overview.html.executor": "Run",
+    "JavaScript Debug.index.html.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "#9 on character__management__2.0",
+    "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates" />
@@ -146,7 +158,7 @@
       <workItem from="1741270776283" duration="1236000" />
       <workItem from="1741272019127" duration="8173000" />
       <workItem from="1741335756970" duration="2725000" />
-      <workItem from="1741340441476" duration="19012000" />
+      <workItem from="1741340441476" duration="20343000" />
     </task>
     <task id="LOCAL-00001" summary="add some classes">
       <option name="closed" value="true" />
@@ -220,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741619074709</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix(9): fix base.html">
+      <option name="closed" value="true" />
+      <created>1741619865053</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741619865053</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,6 +268,7 @@
     <MESSAGE value="feat(9): add race/class descriptions to characterDetail screen" />
     <MESSAGE value="feat(9): fix character_form.html to display the base stats values correctly" />
     <MESSAGE value="feat(9): fix character_form.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(9): fix character_form.html" />
+    <MESSAGE value="fix(9): fix base.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix base.html" />
   </component>
 </project>

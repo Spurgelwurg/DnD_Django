@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.generic import ListView
 from .models import Character, Race, SubRace, CharacterClass
 from .forms import CharacterForm, DiceRollForm
-from .dice import roll_dice as dice_roller, roll_ability_scores as roll_scores
+from .dice import roll_dice as dice_roller
 
 
 
@@ -58,9 +58,6 @@ def roll_dice(request):
     return render(request, 'game/character_management/dice_form.html', {'form': form})
 
 
-def roll_ability_scores(request):
-    scores = roll_scores()
-    return render(request, 'game/character_management/ability_scores.html', {'scores': scores})
 
 
 def get_subrace(request):
