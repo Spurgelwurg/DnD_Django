@@ -1,0 +1,505 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create Character</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-section">
+            <h3>Basic Info</h3>
+            <label for="id_name">Name:</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-section">
+            <h3>Race</h3>
+            <label for="id_race">Race:</label>
+            <select name="race" id="id_race" onchange="getSubraces()">
+                <option value="">Select a race</option>
+                {% for race in races %}
+                    <option value="{{ race.id }}">{{ race.name }}</option>
+                {% endfor %}
+            </select>
+
+            <div id="race_details" class="race-details"></div>
+
+            <label for="id_subrace">Subrace:</label>
+            <select name="subrace" id="id_subrace">
+                <option value="">Select a race first</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <h3>Class</h3>
+            <label for="id_character_class">Class:</label>
+            <select name="character_class" id="id_character_class">
+                <option value="">Select a class</option>
+                {% for class_option in classes %}
+                    <option value="{{ class_option.id }}">{{ class_option.name }}</option>
+                {% endfor %}
+            </select>
+            <div id="class_details" class="class-details"></div>
+        </div>
+
+        <div class="form-section">
+            <h3>Ability Scores</h3>
+            <button type="button" id="roll-ability-scores" class="button">Roll Ability Scores (3d6 x6)</button>
+
+            <div id="ability-rolls-results" class="ability-rolls-results" style="display:none; margin-top: 15px;">
+                <h4>Your Rolls:</h4>
+                <div id="roll-results"></div>
+            </div>
+
+            <div class="ability-scores" style="margin-top: 20px;">
+                <div>
+                    <label for="id_strength">Strength:</label>
+                    <div class="calculation-display" id="calc_strength"></div>
+                    <div class="ability-input-group">
+                        {{ form.strength }}
+                        <select class="score-selector" data-target="id_strength">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="id_dexterity">Dexterity:</label>
+                    <div class="calculation-display" id="calc_dexterity"></div>
+                    <div class="ability-input-group">
+                        {{ form.dexterity }}
+                        <select class="score-selector" data-target="id_dexterity">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="id_constitution">Constitution:</label>
+                    <div class="calculation-display" id="calc_constitution"></div>
+                    <div class="ability-input-group">
+                        {{ form.constitution }}
+                        <select class="score-selector" data-target="id_constitution">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="id_intelligence">Intelligence:</label>
+                    <div class="calculation-display" id="calc_intelligence"></div>
+                    <div class="ability-input-group">
+                        {{ form.intelligence }}
+                        <select class="score-selector" data-target="id_intelligence">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="id_wisdom">Wisdom:</label>
+                    <div class="calculation-display" id="calc_wisdom"></div>
+                    <div class="ability-input-group">
+                        {{ form.wisdom }}
+                        <select class="score-selector" data-target="id_wisdom">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="id_charisma">Charisma:</label>
+                    <div class="calculation-display" id="calc_charisma"></div>
+                    <div class="ability-input-group">
+                        {{ form.charisma }}
+                        <select class="score-selector" data-target="id_charisma">
+                            <option value="">Assign a roll</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Additional Info</h3>
+            <div>
+                <label for="id_level">Level:</label>
+                {{ form.level }}
+            </div>
+            <div>
+                <label for="id_description">Character Biography:</label>
+                {{ form.description }}
+            </div>
+            <div>
+                <label for="id_equipment">Equipment:</label>
+                {{ form.equipment }}
+            </div>
+            <div>
+                <label for="id_inventory">Inventory:</label>
+                {{ form.inventory }}
+            </div>
+            <div>
+                <label for="id_spells">Spells:</label>
+                {{ form.spells }}
+            </div>
+        </div>
+
+        <button type="submit">Create Character</button>
+    </form>
+{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .ability-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .ability-input-group input {
+            flex: 1;
+            color: #000;
+            background-color: #fff;
+            font-size: 16px;
+            min-width: 60px;
+        }
+
+        .ability-input-group select {
+            flex: 1;
+        }
+
+        .dice-roll {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .used {
+            opacity: 0.7;
+        }
+
+        .assigned-to {
+            color: #555;
+            font-style: italic;
+            margin-left: 5px;
+        }
+
+        .calculation-display {
+            color: #2c7fb8;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            min-height: 1.5em;
+        }
+
+        .warning {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* Add spacing between ability score sections */
+        .ability-scores > div {
+            margin-bottom: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function getSubraces() {
+        const raceId = document.getElementById('id_race').value;
+        if (raceId) {
+            fetch(`{% url 'game:character_management:get_subrace' %}?race_id=${raceId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const subraceSelect = document.getElementById('id_subrace');
+                    subraceSelect.innerHTML = '<option value="">Select a subrace</option>';
+
+                    data.subraces.forEach(subrace => {
+                        const option = document.createElement('option');
+                        option.value = subrace.id;
+                        option.textContent = subrace.name;
+                        subraceSelect.appendChild(option);
+                    });
+                });
+        }
+    }
+
+    function getClassDetails() {
+        const classId = document.getElementById('id_character_class').value;
+        if (classId) {
+            fetch(`{% url 'game:character_management:get_class_details' %}?class_id=${classId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('class_details').innerHTML = `
+                        <div class="details-box">
+                            <h4>${data.name}</h4>
+                            <p>${data.description}</p>
+                        </div>
+                    `;
+                });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize storage for rolls and racial modifiers
+        let abilityRolls = [];
+        let currentRaceModifiers = {
+            strength: 0, dexterity: 0, constitution: 0,
+            intelligence: 0, wisdom: 0, charisma: 0
+        };
+
+        // Base ability score value
+        const BASE_ABILITY_SCORE = 0;
+
+        // Parse ability modifiers from string like "Strength +2, Constitution +1"
+        function parseAbilityModifiers(modifiersString) {
+            const modifiers = {
+                strength: 0, dexterity: 0, constitution: 0,
+                intelligence: 0, wisdom: 0, charisma: 0
+            };
+
+            if (!modifiersString) return modifiers;
+
+            // Regular expression to extract ability name and modifier value
+            const regex = /([A-Za-z]+)\s*([+-]\d+)/g;
+            let match;
+
+            while ((match = regex.exec(modifiersString)) !== null) {
+                const ability = match[1].toLowerCase();
+                const value = parseInt(match[2]);
+
+                if (modifiers.hasOwnProperty(ability)) {
+                    modifiers[ability] = value;
+                }
+            }
+
+            return modifiers;
+        }
+
+        // Apply racial ability score modifiers
+        function updateAbilityScores() {
+            ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].forEach(ability => {
+                const input = document.getElementById(`id_${ability}`);
+
+                // Get the roll value if assigned
+                const rollId = input.getAttribute('data-roll-id');
+                let rollValue = 0;
+
+                if (rollId) {
+                    const roll = abilityRolls.find(r => r.id === parseInt(rollId));
+                    if (roll) rollValue = roll.total;
+                }
+
+                // Calculate total with base + roll + racial modifier
+                const racialMod = currentRaceModifiers[ability] || 0;
+                const totalValue = Math.min(BASE_ABILITY_SCORE + rollValue + racialMod, 20);
+
+                // Update input value
+                input.value = totalValue;
+
+                // Update display
+                showAbilityCalculation(ability, rollValue, racialMod);
+            });
+        }
+
+        // Show calculation breakdown ABOVE ability score
+        // TODO(jmeusel): this func should not be used to show in the UI
+        // In the UI should only the ability score be shown
+        function showAbilityCalculation(ability, rollValue, racialMod) {
+            const calcDiv = document.getElementById(`calc_${ability}`);
+
+            // Create calculation display
+            let formula = `<strong>${BASE_ABILITY_SCORE}`;
+
+            if (rollValue > 0) {
+                formula += ` + Roll ${rollValue}`;
+            }
+
+            if (racialMod !== 0) {
+                formula += ` ${racialMod > 0 ? '+' : ''} ${racialMod}`;
+            }
+
+            formula += '</strong>';
+
+            // Add warning if value exceeds 20
+            if (BASE_ABILITY_SCORE + rollValue + racialMod > 20) {
+                formula += ' <em class="warning">(Capped at 20)</em>';
+            }
+
+            calcDiv.innerHTML = formula;
+        }
+
+        // Roll button click handler
+        document.getElementById('roll-ability-scores').addEventListener('click', function() {
+            // Generate 6 rolls of 3d6
+            abilityRolls = [];
+            for (let i = 0; i < 6; i++) {
+                const roll1 = Math.floor(Math.random() * 6) + 1;
+                const roll2 = Math.floor(Math.random() * 6) + 1;
+                const roll3 = Math.floor(Math.random() * 6) + 1;
+                const total = roll1 + roll2 + roll3;
+                abilityRolls.push({
+                    id: i,
+                    rolls: [roll1, roll2, roll3],
+                    total: total,
+                    used: false,
+                    assignedTo: null
+                });
+            }
+
+            // Display rolls and update UI
+            displayRolls();
+            document.getElementById('ability-rolls-results').style.display = 'block';
+            updateScoreSelectors();
+        });
+
+        // Display roll results with assignment info
+        function displayRolls() {
+            const resultsDiv = document.getElementById('roll-results');
+            resultsDiv.innerHTML = '';
+
+            abilityRolls.forEach(roll => {
+                const rollDiv = document.createElement('div');
+                rollDiv.className = 'dice-roll';
+                rollDiv.id = `roll-${roll.id}`;
+
+                if (roll.used) {
+                    rollDiv.classList.add('used');
+                }
+
+                let rollHTML = `<strong>Roll ${roll.id + 1}:</strong> ${roll.rolls.join(' + ')} = ${roll.total}`;
+
+                // Add info about which ability this roll is assigned to
+                if (roll.assignedTo) {
+                    rollHTML += ` <span class="assigned-to">(Assigned to ${roll.assignedTo})</span>`;
+                }
+
+                rollDiv.innerHTML = rollHTML;
+                resultsDiv.appendChild(rollDiv);
+            });
+        }
+
+        // Update score selectors with available and assigned rolls
+        function updateScoreSelectors() {
+            document.querySelectorAll('.score-selector').forEach(selector => {
+                const targetId = selector.getAttribute('data-target');
+                const ability = targetId.replace('id_', '');
+                const input = document.getElementById(targetId);
+                const currentRollId = input.getAttribute('data-roll-id');
+
+                // Keep first empty option
+                selector.innerHTML = '<option value="">Assign a roll</option>';
+
+                // Add ALL rolls as options (both used and unused)
+                abilityRolls.forEach(roll => {
+                    const option = document.createElement('option');
+                    option.value = roll.id;
+                    option.textContent = `Roll ${roll.id + 1}: ${roll.total}`;
+
+                    // Mark the option as selected if this is the current roll for this ability
+                    if (currentRollId && parseInt(currentRollId) === roll.id) {
+                        option.selected = true;
+                    }
+
+                    // Indicate if used elsewhere (except for the current ability)
+                    if (roll.used && roll.assignedTo !== ability) {
+                        option.textContent += ` (assigned to ${roll.assignedTo})`;
+                        option.disabled = true;
+                    }
+
+                    selector.appendChild(option);
+                });
+            });
+        }
+
+        // Handle ability score selection
+        document.querySelectorAll('.score-selector').forEach(selector => {
+            selector.addEventListener('change', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetInput = document.getElementById(targetId);
+                const ability = targetId.replace('id_', '');
+
+                // Get previous roll ID if any
+                const previousRollId = targetInput.getAttribute('data-roll-id');
+
+                // Unmark previous roll if there was one
+                if (previousRollId) {
+                    const prevRoll = abilityRolls.find(r => r.id === parseInt(previousRollId));
+                    if (prevRoll) {
+                        prevRoll.used = false;
+                        prevRoll.assignedTo = null;
+                    }
+                }
+
+                // Get selected roll
+                const selectedRollId = this.value;
+
+                if (selectedRollId) {
+                    // Mark new roll as used and assigned to this ability
+                    const roll = abilityRolls.find(r => r.id === parseInt(selectedRollId));
+                    if (roll) {
+                        roll.used = true;
+                        roll.assignedTo = ability;
+
+                        // Store roll ID in data attribute
+                        targetInput.setAttribute('data-roll-id', roll.id);
+
+                        // Calculate total: base + roll + racial mod (capped at 20)
+                        const racialMod = currentRaceModifiers[ability] || 0;
+                        // Update input value
+                        targetInput.value = Math.min(BASE_ABILITY_SCORE + roll.total + racialMod, 20);
+
+                        // Show calculation breakdown
+                        showAbilityCalculation(ability, roll.total, racialMod);
+                    }
+                } else {
+                    // Reset to default value if no roll selected
+                    targetInput.removeAttribute('data-roll-id');
+
+                    // Apply only base + racial modifier
+                    const racialMod = currentRaceModifiers[ability] || 0;
+                    targetInput.value = BASE_ABILITY_SCORE + racialMod;
+
+                    // Update display
+                    showAbilityCalculation(ability, 0, racialMod);
+                }
+
+                // Update UI
+                displayRolls();
+                updateScoreSelectors();
+            });
+        });
+
+        // Race selection handler - update ability scores when race changes
+        document.getElementById('id_race').addEventListener('change', function() {
+            getSubraces(); // Existing function call
+
+            // Fetch race details including ability score modifiers
+            const raceId = this.value;
+            if (raceId) {
+                fetch(`{% url 'game:character_management:get_race_details' %}?race_id=${raceId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Display race details
+                        document.getElementById('race_details').innerHTML = `
+                            <div class="details-box">
+                                <h4>${data.name}</h4>
+                                <p>${data.description}</p>
+                                <ul>
+                                    <li><strong>Ability Scores:</strong> ${data.ability_scores}</li>
+                                    <li><strong>Speed:</strong> ${data.speed}</li>
+                                    <li><strong>Size:</strong> ${data.size}</li>
+                                    <li><strong>Languages:</strong> ${data.languages}</li>
+                                </ul>
+                            </div>
+                        `;
+
+                        // Parse and apply ability score modifiers
+                        currentRaceModifiers = parseAbilityModifiers(data.ability_scores);
+                        updateAbilityScores();
+                    })
+                    .catch(error => console.error('Error fetching race details:', error));
+            }
+        });
+
+        // Add event listener for class selection
+        document.getElementById('id_character_class').addEventListener('change', getClassDetails);
+    });
+</script>
+{% endblock %}

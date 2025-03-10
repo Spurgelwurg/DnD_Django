@@ -1,5 +1,14 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'game/style.css' %}">
+{% block content %}
+<h1>Welcome to D&D Character Manager</h1>
 
-TODO
+<p>This application helps you manage your Dungeons & Dragons characters.</p>
+
+<div class="menu-buttons">
+    <a href="{% url 'game:character_management:character_list' %}" class="button">View Characters</a>
+    <a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
+    <a href="{% url 'game:character_management:roll_dice' %}" class="button">Roll Dice</a>
+</div>
+{% endblock %}

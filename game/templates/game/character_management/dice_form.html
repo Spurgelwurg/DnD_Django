@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Dice Roller</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Roll</button>
+</form>
+
+<a href="{% url 'game:character_management:character_list' %}">Back to Character List</a>
+{% endblock %}
