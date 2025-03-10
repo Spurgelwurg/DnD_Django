@@ -3,16 +3,6 @@
 {% block content %}
 <h1>Create Character</h1>
 
-<div class="dice-roller">
-    <h3>Dice Roller</h3>
-    <form action="{% url 'game:character_management:roll_dice' %}" method="post">
-        {% csrf_token %}
-        {{ dice_form.as_p }}
-        <button type="submit">Roll</button>
-    </form>
-    <a href="{% url 'game:character_management:roll_ability_scores' %}" class="button">Roll Ability Scores</a>
-</div>
-
 <form method="post">
     {% csrf_token %}
 
@@ -49,36 +39,72 @@
                 <option value="{{ class_option.id }}">{{ class_option.name }}</option>
             {% endfor %}
         </select>
-
         <div id="class_details" class="class-details"></div>
     </div>
 
     <div class="form-section">
         <h3>Ability Scores</h3>
-        <div class="ability-scores">
+        <button type="button" id="roll-ability-scores" class="button">Roll Ability Scores (3d6 x6)</button>
+
+        <div id="ability-rolls-results" class="ability-rolls-results" style="display:none; margin-top: 15px;">
+            <h4>Your Rolls:</h4>
+            <div id="roll-results"></div>
+        </div>
+
+        <div class="ability-scores" style="margin-top: 20px;">
             <div>
                 <label for="id_strength">Strength:</label>
-                {{ form.strength }}
+                <div class="ability-input-group">
+                    {{ form.strength }}
+                    <select class="score-selector" data-target="id_strength">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <label for="id_dexterity">Dexterity:</label>
-                {{ form.dexterity }}
+                <div class="ability-input-group">
+                    {{ form.dexterity }}
+                    <select class="score-selector" data-target="id_dexterity">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <label for="id_constitution">Constitution:</label>
-                {{ form.constitution }}
+                <div class="ability-input-group">
+                    {{ form.constitution }}
+                    <select class="score-selector" data-target="id_constitution">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <label for="id_intelligence">Intelligence:</label>
-                {{ form.intelligence }}
+                <div class="ability-input-group">
+                    {{ form.intelligence }}
+                    <select class="score-selector" data-target="id_intelligence">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <label for="id_wisdom">Wisdom:</label>
-                {{ form.wisdom }}
+                <div class="ability-input-group">
+                    {{ form.wisdom }}
+                    <select class="score-selector" data-target="id_wisdom">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
             <div>
                 <label for="id_charisma">Charisma:</label>
-                {{ form.charisma }}
+                <div class="ability-input-group">
+                    {{ form.charisma }}
+                    <select class="score-selector" data-target="id_charisma">
+                        <option value="">Assign a roll</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -110,6 +136,32 @@
     <button type="submit">Create Character</button>
 </form>
 
+{% block extra_head %}
+<style>
+    .ability-input-group {
+        display: flex;
+        gap: 10px;
+    }
+    .ability-input-group input {
+        flex: 1;
+    }
+    .ability-input-group select {
+        flex: 1;
+    }
+    .dice-roll {
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+    .used {
+        opacity: 0.5;
+        text-decoration: line-through;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
 <script>
 function getSubraces() {
     const raceId = document.getElementById('id_race').value;
@@ -128,5 +180,92 @@ function getSubraces() {
             });
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize empty rolls array
+    let abilityRolls = [];
+
+    // Roll button click handler
+    document.getElementById('roll-ability-scores').addEventListener('click', function() {
+        // Roll 3d6 six times
+        abilityRolls = [];
+        for (let i = 0; i < 6; i++) {
+            const roll1 = Math.floor(Math.random() * 6) + 1;
+            const roll2 = Math.floor(Math.random() * 6) + 1;
+            const roll3 = Math.floor(Math.random() * 6) + 1;
+            const total = roll1 + roll2 + roll3;
+            abilityRolls.push({
+                id: i,
+                rolls: [roll1, roll2, roll3],
+                total: total,
+                used: false
+            });
+        }
+
+        // Display rolls
+        const resultsDiv = document.getElementById('roll-results');
+        resultsDiv.innerHTML = '';
+
+        abilityRolls.forEach(roll => {
+            const rollDiv = document.createElement('div');
+            rollDiv.className = 'dice-roll';
+            rollDiv.id = `roll-${roll.id}`;
+            rollDiv.innerHTML = `
+                <strong>Roll ${roll.id + 1}:</strong>
+                ${roll.rolls.join(' + ')} = <strong>${roll.total}</strong>
+            `;
+            resultsDiv.appendChild(rollDiv);
+        });
+
+        // Show the results section
+        document.getElementById('ability-rolls-results').style.display = 'block';
+
+        // Update score selectors
+        updateScoreSelectors();
+    });
+
+    // Update all score selectors with current rolls
+    function updateScoreSelectors() {
+        document.querySelectorAll('.score-selector').forEach(selector => {
+            // Keep the first empty option
+            selector.innerHTML = '<option value="">Assign a roll</option>';
+
+            // Add each available roll as an option
+            abilityRolls.forEach(roll => {
+                if (!roll.used) {
+                    const option = document.createElement('option');
+                    option.value = roll.total;
+                    option.textContent = `Roll ${roll.id + 1}: ${roll.total}`;
+                    selector.appendChild(option);
+                }
+            });
+        });
+    }
+
+    // Handle score selection
+    document.querySelectorAll('.score-selector').forEach(selector => {
+        selector.addEventListener('change', function() {
+            const targetId = this.getAttribute('data-target');
+            const targetInput = document.getElementById(targetId);
+            const selectedValue = this.value;
+
+            if (selectedValue) {
+                // Update the input with the selected value
+                targetInput.value = selectedValue;
+
+                // Mark the roll as used
+                const rollId = parseInt(this.selectedOptions[0].textContent.split(':')[0].replace('Roll ', '')) - 1;
+                abilityRolls[rollId].used = true;
+
+                // Update the UI to show the roll is used
+                document.getElementById(`roll-${rollId}`).classList.add('used');
+
+                // Update all selectors
+                updateScoreSelectors();
+            }
+        });
+    });
+});
 </script>
+{% endblock %}
 {% endblock %}

@@ -69,6 +69,35 @@ def get_subrace(request):
     return JsonResponse(list(subraces), safe=False)
 
 
+def character_edit(request, character_id):
+    character = get_object_or_404(Character, id=character_id)
+
+    if request.method == 'POST':
+        form = CharacterForm(request.POST, instance=character)
+        if form.is_valid():
+            form.save()
+            return redirect('game:character_management:character_detail', character_id=character.id)
+    else:
+        form = CharacterForm(instance=character)
+
+    return render(request, 'game/character_management/character_edit.html', {
+        'form': form,
+        'character': character
+    })
+
+
+def character_delete(request, character_id):
+    character = get_object_or_404(Character, id=character_id)
+
+    if request.method == 'POST':
+        character.delete()
+        return redirect('game:character_management:character_list')
+
+    return render(request, 'game/character_management/character_delete.html', {
+        'character': character
+    })
+
+
 
 
 

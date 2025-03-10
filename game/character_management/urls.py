@@ -10,4 +10,7 @@ urlpatterns = [
     path('roll_dice/', views.roll_dice, name='roll_dice'),
     path('roll_ability_scores/', views.roll_ability_scores, name='roll_ability_scores'),
     path('get_subrace/', views.get_subrace, name='get_subrace'),
+
+path('<int:character_id>/edit/', views.character_edit, name='character_edit'),
+path('<int:character_id>/delete/', views.character_delete, name='character_delete'),
 ]

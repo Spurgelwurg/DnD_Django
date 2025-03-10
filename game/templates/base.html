@@ -45,7 +45,7 @@
             background: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
 
@@ -91,7 +91,7 @@
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .character-list a {
@@ -104,7 +104,7 @@
             background: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         /* Dice roller */
@@ -112,7 +112,7 @@
             background: white;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
@@ -136,28 +136,50 @@
             background: #f9f9f9;
             border-radius: 5px;
         }
+
+        .ability-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ability-input-group input,
+        .ability-input-group select {
+            flex: 1;
+        }
+
+        .dice-roll {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .used {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <header>
-        <h1>D&D Character Manager</h1>
-        <nav>
-            <a href="{% url 'game:character_management:character_list' %}">Characters</a>
-            <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
-            <a href="{% url 'game:character_management:roll_dice' %}">Dice Roller</a>
-            <a href="{% url 'game:character_management:roll_ability_scores' %}">Roll Ability Scores</a>
-        </nav>
-    </header>
+<header>
+    <h1>D&D Character Manager</h1>
+    <nav>
+        <a href="{% url 'game:character_management:character_list' %}">Characters</a>
+        <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
+        <a href="{% url 'game:character_management:roll_dice' %}">Dice Roller</a>
+        <a href="{% url 'game:character_management:roll_ability_scores' %}">Roll Ability Scores</a>
+    </nav>
+</header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<main>
+    {% block content %}{% endblock %}
+</main>
 
-    <footer>
-        <p>&copy; {% now "Y" %} D&D Character Manager</p>
-    </footer>
+<footer>
+    <p>&copy; {% now "Y" %} D&D Character Manager</p>
+</footer>
 
-    {% block scripts %}{% endblock %}
+{% block scripts %}{% endblock %}
 </body>
 </html>
