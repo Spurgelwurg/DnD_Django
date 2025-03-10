@@ -191,7 +191,7 @@
             color: #e74c3c;
             font-weight: bold;
         }
-        
+
         /* Add spacing between ability score sections */
         .ability-scores > div {
             margin-bottom: 15px;
@@ -301,7 +301,7 @@
         // Show calculation breakdown ABOVE ability score
         function showAbilityCalculation(ability, rollValue, racialMod) {
             const calcDiv = document.getElementById(`calc_${ability}`);
-            
+
             // Create calculation display
             let formula = `<strong>${BASE_ABILITY_SCORE}`;
 
@@ -314,12 +314,12 @@
             }
 
             formula += '</strong>';
-            
+
             // Add warning if value exceeds 20
             if (BASE_ABILITY_SCORE + rollValue + racialMod > 20) {
                 formula += ' <em class="warning">(Capped at 20)</em>';
             }
-            
+
             calcDiv.innerHTML = formula;
         }
 
@@ -440,10 +440,8 @@
 
                         // Calculate total: base + roll + racial mod (capped at 20)
                         const racialMod = currentRaceModifiers[ability] || 0;
-                        const totalValue = Math.min(BASE_ABILITY_SCORE + roll.total + racialMod, 20);
-
                         // Update input value
-                        targetInput.value = totalValue;
+                        targetInput.value = Math.min(BASE_ABILITY_SCORE + roll.total + racialMod, 20);
 
                         // Show calculation breakdown
                         showAbilityCalculation(ability, roll.total, racialMod);
