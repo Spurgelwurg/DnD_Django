@@ -245,7 +245,7 @@
         };
 
         // Base ability score value
-        const BASE_ABILITY_SCORE = 10;
+        const BASE_ABILITY_SCORE = 0;
 
         // Parse ability modifiers from string like "Strength +2, Constitution +1"
         function parseAbilityModifiers(modifiersString) {
@@ -299,6 +299,8 @@
         }
 
         // Show calculation breakdown ABOVE ability score
+        // TODO(jmeusel): this func should not be used to show in the UI
+        // In the UI should only the ability score be shown
         function showAbilityCalculation(ability, rollValue, racialMod) {
             const calcDiv = document.getElementById(`calc_${ability}`);
 

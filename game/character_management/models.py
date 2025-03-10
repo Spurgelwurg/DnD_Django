@@ -44,12 +44,12 @@ class Character(models.Model):
     level = models.IntegerField(default=1)
 
     # Ability scores
-    strength = models.IntegerField(default=10)
-    dexterity = models.IntegerField(default=10)
-    constitution = models.IntegerField(default=10)
-    intelligence = models.IntegerField(default=10)
-    wisdom = models.IntegerField(default=10)
-    charisma = models.IntegerField(default=10)
+    strength = models.IntegerField(default=0)
+    dexterity = models.IntegerField(default=0)
+    constitution = models.IntegerField(default=0)
+    intelligence = models.IntegerField(default=0)
+    wisdom = models.IntegerField(default=0)
+    charisma = models.IntegerField(default=0)
 
     # Additional fields
     description = models.TextField(blank=True)

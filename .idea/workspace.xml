@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix base.html">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix routing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/character_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/character_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/ability_scores.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +156,7 @@
       <workItem from="1741270776283" duration="1236000" />
       <workItem from="1741272019127" duration="8173000" />
       <workItem from="1741335756970" duration="2725000" />
-      <workItem from="1741340441476" duration="20343000" />
+      <workItem from="1741340441476" duration="20648000" />
     </task>
     <task id="LOCAL-00001" summary="add some classes">
       <option name="closed" value="true" />
@@ -240,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741619865053</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fix(9): fix routing">
+      <option name="closed" value="true" />
+      <created>1741620921321</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1741620921321</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +275,7 @@
     <MESSAGE value="feat(9): fix character_form.html to display the base stats values correctly" />
     <MESSAGE value="feat(9): fix character_form.html" />
     <MESSAGE value="fix(9): fix base.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix base.html" />
+    <MESSAGE value="fix(9): fix routing" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix routing" />
   </component>
 </project>
