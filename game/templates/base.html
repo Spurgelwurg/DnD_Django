@@ -122,6 +122,10 @@
             color: #2c3e50;
         }
 
+        .warning {
+            color: #e74c3c;
+        }
+
         /* Ability scores section */
         .ability-scores {
             display: grid;
@@ -159,20 +163,36 @@
             text-decoration: line-through;
         }
 
-         .details-box {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 15px;
-        margin: 10px 0;
+        .details-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
         }
 
         .race-details, .class-details {
-        margin-top: 10px;
-        margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 15px;
         }
     </style>
-    {% block extra_head %}{% endblock %}
+    {% block extra_head %}
+        .racial-modifier {
+        color: #2c7fb8;
+        margin-left: 5px;
+        font-size: 0.9em;
+        }
+
+        .warning {
+        color: #e74c3c;
+        }
+
+        .assigned-to {
+        color: #777;
+        font-style: italic;
+        margin-left: 5px;
+        }
+    {% endblock %}
 </head>
 <body>
 <header>
