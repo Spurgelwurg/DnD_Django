@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Neues Event erstellen{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-warning text-center">Neues Event erstellen</h1>
+
+    <div class="card shadow-lg p-4 mt-3">
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'game:campaign_manager:campaign_detail' campaign.id %}" class="btn btn-secondary">Abbrechen</a>
+                <button type="submit" class="btn btn-success">Speichern</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

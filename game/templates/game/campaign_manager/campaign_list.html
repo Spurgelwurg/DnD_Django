@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Kampagnen Übersicht{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center text-warning">Kampagnen Übersicht</h1>
+
+    <div class="row">
+        {% csrf_token %}
+        
+        {% for campaign in campaigns %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-header bg-warning text-dark fw-bold">
+                        {{ campaign.name }}
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="flex-grow-1">{{ campaign.description|truncatewords:30 }}</p>
+                        <a href="{% url 'game:campaign_manager:campaign_detail' campaign.id %}" class="btn btn-primary mt-auto">Details</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">Keine Kampagnen gefunden.</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'game:campaign_manager:campaign_create' %}" class="btn btn-success">Neue Kampagne erstellen</a>
+    </div>
+</div>
+{% endblock %}

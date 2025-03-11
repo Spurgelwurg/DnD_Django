@@ -1,0 +1,90 @@
+{% extends 'game/campaign_manager/base.html' %}
+
+{% block title %}{{ campaign.name }} - Kampagnendetails{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center text-warning">{{ campaign.name }}</h1>
+    <p class="text-center text-muted">{{ campaign.description }}</p>
+
+    <div class="row">
+        <!-- NPCs -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-dark fw-bold">NPCs</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for npc in npcs %}
+                            <li class="list-group-item">{{ npc.name }} - {{ npc.role }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">Keine NPCs gefunden.</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'game:campaign_manager:npc_create' campaign.id %}" class="btn btn-primary mt-3">Neuen NPC erstellen</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-dark fw-bold">Events</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for event in events %}
+                            <li class="list-group-item">{{ event.title }} - {{ event.event_date }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">Keine Events gefunden.</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'game:campaign_manager:event_create' campaign.id %}" class="btn btn-primary mt-3">Neues Event erstellen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <!-- Villains -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-light fw-bold">Villains</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for villain in villains %}
+                            <li class="list-group-item">{{ villain.name }} - {{ villain.evil_plan }}</li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">Keine Villains gefunden.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orte -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-light fw-bold">Orte</div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for location in locations %}
+                            <li class="list-group-item">{{ location.name }} - 
+                                {% if location.is_discovered %}
+                                    <span class="badge bg-success">Entdeckt</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Nicht entdeckt</span>
+                                {% endif %}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-muted">Keine Orte gefunden.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'game:campaign_manager:campaign_edit' campaign.id %}" class="btn btn-warning">Kampagne bearbeiten</a>
+    </div>
+</div>
+{% endblock %}

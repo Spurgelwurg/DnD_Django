@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Neuen NPC erstellen{% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <h1 class="text-center text-light mb-4">Neuen NPC erstellen</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="card shadow-lg border-dark" style="background: #2b2b2b;">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group text-light">
+                                <label for="npc_name">Name des NPCs</label>
+                                {{ form.npc_name }}
+                            </div>
+
+                            <div class="form-group text-light">
+                                <label for="npc_race">Rasse</label>
+                                {{ form.npc_race }}
+                            </div>
+
+                            <div class="form-group text-light">
+                                <label for="npc_class">Klasse</label>
+                                {{ form.npc_class }}
+                            </div>
+
+                            <div class="form-group text-light">
+                                <label for="npc_background">Hintergrund</label>
+                                {{ form.npc_background }}
+                            </div>
+
+                            <div class="form-group text-light">
+                                <label for="npc_personality">Persönlichkeit</label>
+                                {{ form.npc_personality }}
+                            </div>
+
+                            <div class="form-group text-light">
+                                <label for="npc_notes">Notizen</label>
+                                {{ form.npc_notes }}
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-outline-light">Speichern</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

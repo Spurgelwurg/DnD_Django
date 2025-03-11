@@ -1,5 +1,29 @@
-{% load static %}
+{% extends "base.html" %}
 
-<link rel="stylesheet" href="{% static 'game/style.css' %}">
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="display-4">Willkommen zu deinem DnD-Manager!</h1>
+    <p class="lead">Verwalte deine Kampagnen, Charaktere und Abenteuer an einem Ort.</p>
 
-TODO
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header text-center">Kampagnen</div>
+                <div class="card-body">
+                    <p>Erstelle, verwalte und plane epische Abenteuer mit deinem Team.</p>
+                    <a href="{% url 'game:campaign_manager:campaign_list' %}" class="btn btn-primary">Zu den Kampagnen</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header text-center">Charaktere</div>
+                <div class="card-body">
+                    <p>Behalte den Überblick über deine Helden und ihre Geschichten.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
