@@ -9,7 +9,6 @@ from game.forms import RegisterForm
 class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = "game/index.html"
 
-
 class LoginView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
         form = RegisterForm()
@@ -20,13 +19,11 @@ class LoginView(generic.View):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
             login(request, user)
             return redirect('game:index')
         else:
             return render(request, "game/login.html", {'error': 'Invalid username or password'})
-
 
 class RegisterView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:

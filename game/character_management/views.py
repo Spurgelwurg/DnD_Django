@@ -2,17 +2,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.generic import ListView
 from .models import Character, Race, SubRace, CharacterClass
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CharacterForm, DiceRollForm
+from django.contrib.auth.decorators import login_required
 from .dice import roll_dice as dice_roller
 
-
-
-class CharacterListView(ListView):
+class CharacterListView(LoginRequiredMixin, ListView):
     model = Character
     template_name = 'game/character_management/character_list.html'
     context_object_name = 'characters'
 
-
+@login_required(login_url='game:login')
 def character_create(request):
     if request.method == 'POST':
         form = CharacterForm(request.POST)
@@ -30,20 +30,14 @@ def character_create(request):
     }
     return render(request, 'game/character_management/character_form.html', context)
 
-
-#def character_detail(request, character_id):
-#    character = get_object_or_404(Character, id=character_id)
-#    return render(request, 'character_management/character_detail.html.html', {
-#        'character': character,
-#    })
-
+@login_required(login_url='game:login')
 def character_detail(request, character_id):
     character = get_object_or_404(Character, id=character_id)
     return render(request, 'game/character_management/character_detail.html', {
         'character': character,
     })
 
-
+@login_required(login_url='game:login')
 def roll_dice(request):
     if request.method == 'POST':
         form = DiceRollForm(request.POST)
@@ -57,15 +51,13 @@ def roll_dice(request):
 
     return render(request, 'game/character_management/dice_form.html', {'form': form})
 
-
-
-
+@login_required(login_url='game:login')
 def get_subrace(request):
     race_id = request.GET.get('race_id')
     subraces = SubRace.objects.filter(parent_race_id=race_id).values('id', 'name')
     return JsonResponse(list(subraces), safe=False)
 
-
+@login_required(login_url='game:login')
 def character_edit(request, character_id):
     character = get_object_or_404(Character, id=character_id)
 
@@ -82,6 +74,7 @@ def character_edit(request, character_id):
         'character': character
     })
 
+@login_required(login_url='game:login')
 def get_race_details(request):
     race_id = request.GET.get('race_id')
     try:
@@ -100,6 +93,7 @@ def get_race_details(request):
     except Race.DoesNotExist:
         return JsonResponse({'error': 'Race not found'}, status=404)
 
+@login_required(login_url='game:login')
 def get_class_details(request):
     class_id = request.GET.get('class_id')
     try:
@@ -115,7 +109,7 @@ def get_class_details(request):
     except CharacterClass.DoesNotExist:
         return JsonResponse({'error': 'Class not found'}, status=404)
 
-
+@login_required(login_url='game:login')
 def character_delete(request, character_id):
     character = get_object_or_404(Character, id=character_id)
 
@@ -126,27 +120,3 @@ def character_delete(request, character_id):
     return render(request, 'game/character_management/character_delete.html', {
         'character': character
     })
-
-
-
-
-
-###─────────▄──────────────▄
-###────────▌▒█───────────▄▀▒▌
-###────────▌▒▒▀▄───────▄▀▒▒▒▐
-###───────▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
-###─────▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
-###───▄▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀██▀▒▌
-###──▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌
-###──▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
-###─▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌
-###─▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
-###─▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐
-###▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒▒▒░░░░░░▒▒▒▒▌
-###▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐
-###─▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
-###─▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐
-###──▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌
-###────▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
-###───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
-###──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀
