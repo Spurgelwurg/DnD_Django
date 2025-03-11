@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Dice Roll Result</h1>
+
+<div class="dice-result">
+    <p>You rolled {{ result.number_of_dice }} {{ result.dice_type }}.</p>
+    <p>Results: {{ result.results|join:", " }}</p>
+    <p class="total">Total: {{ result.total }}</p>
+</div>
+
+<a href="{% url 'game:character_management:roll_dice' %}" class="button">Roll Again</a>
+<a href="{% url 'game:character_management:character_list' %}">Back to Character List</a>
+{% endblock %}

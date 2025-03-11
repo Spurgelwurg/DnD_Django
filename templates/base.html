@@ -90,6 +90,28 @@
         {% block content %}{% endblock %}
     </div>
 
+    <body>
+        <header>
+            <h1>D&D Character Manager</h1>
+            <nav>
+                <a href="{% url 'game:character_management:character_list' %}">Characters</a>
+                <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
+                <a href="{% url 'game:character_management:roll_dice' %}">Dice Roller</a>
+                <a href="{% url 'game:character_management:roll_ability_scores' %}">Roll Ability Scores</a>
+            </nav>
+        </header>
+    
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    
+        <footer>
+            <p>&copy; {% now "Y" %} D&D Character Manager</p>
+        </footer>
+    
+        {% block scripts %}{% endblock %}
+    </body>
+
     <footer class="footer">
         <p>© 2025 DnD Manager. Alle Rechte vorbehalten.</p>
     </footer>

@@ -1,0 +1,57 @@
+{% extends "game/base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block style %}
+    {{ block.super }}
+    <style>    
+        .centered-wrapper {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8px 20px;
+        }
+
+        label{            
+            margin-bottom: 3px;
+        }
+        .errors li {
+            margin-bottom: 5px; /* Space between error messages */
+        }
+
+      
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container">    
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Login</button>
+        <button type="button" onclick="window.location.href='{% url 'game:register' %}'">Register</button>
+     
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
+{% comment %} 
+add user via console:
+
+1. python manage.py shell
+2. from django.contrib.auth.models import User
+3. user = User.objects.create_user('tu1', password='123')
+4. user.save()
+5. exit()
+
+{% endcomment %}
