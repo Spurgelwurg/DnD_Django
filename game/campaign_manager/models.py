@@ -119,12 +119,3 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
-
-class Character(models.Model):
-    name = models.CharField(max_length=100)
-    campaign = models.ForeignKey(Campaign, related_name='characters', on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    level = models.IntegerField
-
-    def __str__(self):
-        return self.name

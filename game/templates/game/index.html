@@ -1,34 +1,39 @@
-{% extends 'base.html' %}
+{% extends 'game/base.html' %}
 {% load static %}
 
+{% block title %}Welcome to the D&D Manager{% endblock %}
+
 {% block content %}
-<h1>Welcome to D&D Character Manager</h1>
+    <div class="container">
+        <h1>Welcome to the D&D Character & Campaign Manager</h1>
+        <p>Manage your Dungeons & Dragons characters and campaigns with ease. Create epic adventures and track your heroes!</p>
 
-<p>This application helps you manage your Dungeons & Dragons characters.</p>
+        <div class="menu-buttons">
+            <a href="{% url 'game:character_management:character_list' %}" class="button">View Characters</a>
+            <a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
+            <a href="{% url 'game:character_management:roll_dice' %}" class="button">Roll Dice</a>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">Campaigns</div>
+                    <div class="card-body">
+                        <p>Create, manage, and plan epic adventures with your party.</p>
+                        <a href="{% url 'game:campaign_manager:campaign_list' %}" class="btn btn-primary">View Campaigns</a>
+                    </div>
+                </div>
+            </div>
 
-<div class="menu-buttons">
-    <a href="{% url 'game:character_management:character_list' %}" class="button">View Characters</a>
-    <a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
-    <a href="{% url 'game:character_management:roll_dice' %}" class="button">Roll Dice</a>
-</div>
-<div class="row justify-content-center mt-4">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header text-center">Kampagnen</div>
-            <div class="card-body">
-                <p>Erstelle, verwalte und plane epische Abenteuer mit deinem Team.</p>
-                <a href="{% url 'game:campaign_manager:campaign_list' %}" class="btn btn-primary">Zu den Kampagnen</a>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">Characters</div>
+                    <div class="card-body">
+                        <p>Keep track of your heroes and their epic stories.</p>
+                        <a href="{% url 'game:character_management:character_list' %}" class="btn btn-primary">View Characters</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header text-center">Charaktere</div>
-            <div class="card-body">
-                <p>Behalte den Überblick über deine Helden und ihre Geschichten.</p>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

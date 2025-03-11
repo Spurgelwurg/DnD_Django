@@ -1,202 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}D&D Character Manager{% endblock %}</title>
+    <title>{% block title %}DnD Django{% endblock %}</title>
+    
+    {% block style %}
     <style>
-        /* Base styling */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: flex-start;
+        }
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;        
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            border-radius: 8px;
+        }
+        input {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
         }
 
-        /* Navigation */
-        nav {
-            background-color: #2c3e50;
-            padding: 1em;
+        h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin: 5px 0 5px 0;
+            padding: 12px 16px;
             border-radius: 5px;
+            max-width: 200px;
+            cursor: pointer;
+            font-size: larger;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            align-items: left;
+            text-align: left;
+        }
+        .field-error {
+            border-color: red;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
             margin-bottom: 20px;
         }
 
         nav a {
             color: white;
+            padding: 10px 15px;
             text-decoration: none;
-            margin-right: 15px;
-            font-weight: bold;
+            margin: 0 10px;
+            font-size: 16px;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            background-color: #575757;
         }
 
-        /* Headers */
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-
-        /* Forms */
-        form {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button, .button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 5px 0;
-        }
-
-        button:hover, .button:hover {
-            background-color: #2980b9;
-        }
-
-        /* Character lists and details */
-        .character-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .character-list li {
-            background: white;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .character-list a {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: bold;
-        }
-
-        .character-details {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Dice roller */
-        .dice-result {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        footer {
+            margin-top: 20px;
             text-align: center;
-        }
-
-        .dice-result .total {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .warning {
-            color: #e74c3c;
-        }
-
-        /* Ability scores section */
-        .ability-scores {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        /* Form sections */
-        .form-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .ability-input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .ability-input-group input,
-        .ability-input-group select {
-            flex: 1;
-        }
-
-        .dice-roll {
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-
-        .used {
-            opacity: 0.5;
-            text-decoration: line-through;
-        }
-
-        .details-box {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-
-        .race-details, .class-details {
-            margin-top: 10px;
-            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
         }
     </style>
-    {% block extra_head %}
     {% endblock %}
 </head>
 <body>
-<header>
-    <h1>D&D Character Manager</h1>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'game:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% endif %}
+    
     <nav>
+        
         <a href="{% url 'game:character_management:character_list' %}">Characters</a>
-        <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
-        <a href="{% url 'game:character_management:roll_dice' %}">Dice Roller</a>
+        <a href="{% url 'game:campaign_manager:campaign_list' %}">Campaigns</a>
+        <a href="{% url 'game:character_management:roll_dice' %}">Roll Dice</a>
     </nav>
-</header>
+    
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
-<main>
-    {% block content %}{% endblock %}
-</main>
-
-<footer>
-    <p>&copy; {% now "Y" %} D&D Character Manager</p>
-</footer>
-
-{% block scripts %}{% endblock %}
+    <footer>
+        <p>&copy; {% now "Y" %} D&D Django. All rights reserved.</p>
+    </footer>
 </body>
 </html>

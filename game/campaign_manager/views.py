@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Campaign, NPC, Event, Villain, Location, Character
+from .models import Campaign, NPC, Event, Villain, Location
 from .forms import CampaignForm, NPCForm, EventForm, VillainForm, LocationForm
 from django.http import HttpResponse
 from django.views import View

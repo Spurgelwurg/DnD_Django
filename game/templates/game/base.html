@@ -1,85 +1,180 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{% block title %}DnD Django{% endblock %}</title>
-    
-    {% block style %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Character & Campaign Manager</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        /* Global Reset and Body */
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            width: 100%;
-            max-width: 100%;
-            padding: 20px;        
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            align-items: center;
-            justify-content: center;
-        }
-        input {
-            border-radius: 8px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            width: 100%;
             box-sizing: border-box;
-            margin-bottom: 10px;
         }
 
-        h2 {
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1a1a1a;
+            color: #ddd;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('https://www.example.com/path-to-your-background-image.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #e74c3c;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(44, 62, 80, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #f5f5f5;
+            text-decoration: none;
+            margin-right: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #f39c12;
+            border-bottom: 3px solid #f39c12;
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Character and Campaign Boxes */
+        .manager-box {
+            background-color: rgba(52, 152, 219, 0.9);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 45%;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .manager-box:hover {
+            transform: scale(1.05);
+        }
+
+        .manager-box h2 {
+            font-size: 2em;
+            color: #ecf0f1;
             margin-bottom: 20px;
         }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        button {
-            background-color: #4CAF50;
+
+        .manager-box a {
+            display: inline-block;
+            background-color: #3498db;
             color: white;
-            border: none;
-            margin: 5px 0 5px 0;
-            padding: 12px 16px;
-            border-radius: 5px;
-            max-width: 200px;
-            cursor: pointer;
-            font-size: larger;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .manager-box a:hover {
+            background-color: #2980b9;
         }
-        .error {
-            color: red;
-            align-items: left;
-            text-align: left;
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 8px;
         }
-        .field-error {
-            border-color: red;
+
+        footer p {
+            font-size: 1.1em;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            nav a {
+                margin-right: 10px;
+            }
+
+            main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .manager-box {
+                width: 80%;
+            }
         }
     </style>
-    {% endblock %}
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'game:logout' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    {% endif %}
+<header>
+    <h1>D&D Character & Campaign Manager</h1>
     <nav>
-        <!-- Navigation links -->
+        <a href="{% url 'game:character_management:character_list' %}">Character Manager</a>
+        <a href="{% url 'game:campaign_manager:campaign_list' %}">Campaign Manager</a>
     </nav>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        {% comment %} <p>Footer content</p> {% endcomment %}
-    </footer>
+</header>
+
+<main>
+    <!-- Character Manager Section -->
+    <div class="manager-box">
+        <h2>Character Manager</h2>
+        <p>Manage all your D&D characters here.</p>
+        <a href="{% url 'game:character_management:character_list' %}">View Characters</a>
+        <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
+    </div>
+
+    <!-- Campaign Manager Section -->
+    <div class="manager-box">
+        <h2>Campaign Manager</h2>
+        <p>Manage your D&D campaigns and adventures.</p>
+        <a href="{% url 'game:campaign_manager:campaign_list' %}">View Campaigns</a>
+        <a href="{% url 'game:campaign_manager:campaign_create' %}">Create Campaign</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; {% now "Y" %} D&D Character & Campaign Manager | Powered by Magic</p>
+</footer>
+
+{% block scripts %}{% endblock %}
 </body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - D&D Character Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Willkommen beim D&D Character Manager</h1>
+    <p>Mit dieser Anwendung kannst du deine Dungeons & Dragons Charaktere verwalten und epische Abenteuer planen.</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Charakterverwaltung</h3>
+                </div>
+                <div class="card-body">
+                    <p>Erstelle und verwalte deine D&D-Charaktere. Verfolge ihre Abenteuer und verbessere ihre Fähigkeiten.</p>
+                    <a href="{% url 'game:character_management:character_list' %}" class="button">Zu den Charakteren</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Kampagnenverwaltung</h3>
+                </div>
+                <div class="card-body">
+                    <p>Plane und verwalte epische Kampagnen für deine D&D-Charaktere und erlebe unvergessliche Abenteuer.</p>
+                    <a href="{% url 'game:campaign_manager:campaign_list' %}" class="button">Zu den Kampagnen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
