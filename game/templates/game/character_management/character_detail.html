@@ -1,55 +1,118 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ character.name }}</h1>
+    <div class="character-page-layout">
+        <!-- Left column - Character details -->
+        <div class="character-main-info">
+            <h1>{{ character.name }}</h1>
 
-<div class="character-details">
-    <div class="basic-info">
-        <p><strong>Race:</strong> {{ character.race }}{% if character.subrace %} ({{ character.subrace }}){% endif %}</p>
-        <p><strong>Class:</strong> {{ character.character_class }}</p>
-        <p><strong>Level:</strong> {{ character.level }}</p>
+            <div class="character-details">
+                <div class="basic-info">
+                    <p><strong>Race:</strong>
+                        {{ character.race }}{% if character.subrace %} ({{ character.subrace }}){% endif %}</p>
+                    <p><strong>Class:</strong> {{ character.character_class }}</p>
+                    <p><strong>Level:</strong> {{ character.level }}</p>
+                </div>
+
+                <div class="ability-scores">
+                    <h3>Ability Scores</h3>
+                    <ul>
+                        <li><strong>Strength:</strong> {{ character.strength }}</li>
+                        <li><strong>Dexterity:</strong> {{ character.dexterity }}</li>
+                        <li><strong>Constitution:</strong> {{ character.constitution }}</li>
+                        <li><strong>Intelligence:</strong> {{ character.intelligence }}</li>
+                        <li><strong>Wisdom:</strong> {{ character.wisdom }}</li>
+                        <li><strong>Charisma:</strong> {{ character.charisma }}</li>
+                    </ul>
+                </div>
+
+                <!-- Other character information -->
+                {% if character.description %}
+                    <div class="character-description">
+                        <h3>Biography</h3>
+                        <p>{{ character.description }}</p>
+                    </div>
+                {% endif %}
+
+                <!-- Additional sections like equipment, inventory, etc. -->
+            </div>
+
+            <div class="character-actions">
+                <a href="{% url 'game:character_management:character_edit' character.id %}" class="button">Edit</a>
+                <a href="{% url 'game:character_management:character_delete' character.id %}" class="button">Delete</a>
+                <a href="{% url 'game:character_management:character_list' %}" class="button">Back to List</a>
+            </div>
+        </div>
+
+        <!-- Right column - Race and Class details -->
+        <div class="character-race-class-details">
+            <div class="race-details details-box">
+                <h3>{{ character.race.name }}</h3>
+                <p>{{ character.race.description }}</p>
+                <ul>
+                    <li><strong>Ability Scores:</strong> {{ character.race.ability_scores }}</li>
+                    <li><strong>Size:</strong> {{ character.race.size }}</li>
+                    <li><strong>Speed:</strong> {{ character.race.speed }}</li>
+                    <li><strong>Languages:</strong> {{ character.race.languages }}</li>
+                </ul>
+                <p><strong>Traits:</strong> {{ character.race.traits }}</p>
+
+                {% if character.subrace %}
+                    <div class="subrace-details">
+                        <h4>{{ character.subrace.name }}</h4>
+                        {% if character.subrace.additional_traits %}
+                            <p><strong>Additional Traits:</strong> {{ character.subrace.additional_traits }}</p>
+                        {% endif %}
+                        {% if character.subrace.additional_ability_scores %}
+                            <p><strong>Additional Ability
+                                Scores:</strong> {{ character.subrace.additional_ability_scores }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="class-details details-box">
+                <h3>{{ character.character_class.name }}</h3>
+                <p>{{ character.character_class.description }}</p>
+                <ul>
+                    <li><strong>Primary Ability:</strong> {{ character.character_class.primary_ability }}</li>
+                    <li><strong>Hit Die:</strong> {{ character.character_class.hit_die }}</li>
+                    <li><strong>Saving Throws:</strong> {{ character.character_class.saving_throws }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
+{% endblock %}
 
-    <div class="ability-scores">
-        <h3>Ability Scores</h3>
-        <ul>
-            <li><strong>Strength:</strong> {{ character.strength }} ({{ character.get_ability_modifier|default:"0" }})</li>
-            <li><strong>Dexterity:</strong> {{ character.dexterity }} ({{ character.get_ability_modifier|default:"0" }})</li>
-            <li><strong>Constitution:</strong> {{ character.constitution }} ({{ character.get_ability_modifier|default:"0" }})</li>
-            <li><strong>Intelligence:</strong> {{ character.intelligence }} ({{ character.get_ability_modifier|default:"0" }})</li>
-            <li><strong>Wisdom:</strong> {{ character.wisdom }} ({{ character.get_ability_modifier|default:"0" }})</li>
-            <li><strong>Charisma:</strong> {{ character.charisma }} ({{ character.get_ability_modifier|default:"0" }})</li>
-        </ul>
-    </div>
+{% block extra_head %}
+    <style>
+        .character-page-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
 
-    {% if character.description %}
-    <div class="description">
-        <h3>Description</h3>
-        <p>{{ character.description|linebreaks }}</p>
-    </div>
-    {% endif %}
+        .character-main-info {
+            padding-right: 20px;
+        }
 
-    {% if character.equipment %}
-    <div class="equipment">
-        <h3>Equipment</h3>
-        <p>{{ character.equipment|linebreaks }}</p>
-    </div>
-    {% endif %}
+        .character-race-class-details {
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
+        }
 
-    {% if character.inventory %}
-    <div class="inventory">
-        <h3>Inventory</h3>
-        <p>{{ character.inventory|linebreaks }}</p>
-    </div>
-    {% endif %}
+        @media (max-width: 768px) {
+            .character-page-layout {
+                grid-template-columns: 1fr;
+            }
 
-    {% if character.spells %}
-    <div class="spells">
-        <h3>Spells</h3>
-        <p>{{ character.spells|linebreaks }}</p>
-    </div>
-    {% endif %}
-</div>
-
-<a href="{% url 'game:character_management:character_list' %}">Back to Character List</a>
+            .character-race-class-details {
+                border-left: none;
+                border-top: 1px solid #ddd;
+                padding-left: 0;
+                padding-top: 20px;
+                margin-top: 20px;
+            }
+        }
+    </style>
 {% endblock %}

@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(2.0): implement character_management">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix routing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/character_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/character_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="character-management" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,22 +39,26 @@
     &quot;assignee&quot;: &quot;JashaPierre&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Spurgelwurg/DnD_Django.git&quot;,
-    &quot;accountId&quot;: &quot;8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Spurgelwurg/DnD_Django.git",
+    "accountId": "8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9"
   },
-  &quot;recentNewPullRequestHead&quot;: {
-    &quot;server&quot;: {
-      &quot;useHttp&quot;: false,
-      &quot;host&quot;: &quot;github.com&quot;,
-      &quot;port&quot;: null,
-      &quot;suffix&quot;: null
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
     },
-    &quot;owner&quot;: &quot;Spurgelwurg&quot;,
-    &quot;repository&quot;: &quot;DnD_Django&quot;
-  }
-}</component>
+    "owner": "Spurgelwurg",
+    "repository": "DnD_Django"
+  },
+  "highlightDiffLinesInEditor": true
+}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -62,28 +67,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.character_create.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.character_detail.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.character_overview.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#9 on character__management__2.0&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jashameusel/PycharmProjects/DnD_Django/templates&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.character_create.html.executor": "Run",
+    "JavaScript Debug.character_detail.html.executor": "Run",
+    "JavaScript Debug.character_overview.html.executor": "Run",
+    "JavaScript Debug.index.html.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "django.template.preview.state": "SHOW_EDITOR",
+    "git-widget-placeholder": "#9 on character__management__2.0",
+    "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/templates" />
@@ -145,6 +156,7 @@
       <workItem from="1741270776283" duration="1236000" />
       <workItem from="1741272019127" duration="8173000" />
       <workItem from="1741335756970" duration="2725000" />
+      <workItem from="1741340441476" duration="20648000" />
     </task>
     <task id="LOCAL-00001" summary="add some classes">
       <option name="closed" value="true" />
@@ -170,7 +182,71 @@
       <option name="project" value="LOCAL" />
       <updated>1741281470690</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat(2.0): fix namespace and implement populate_data.py">
+      <option name="closed" value="true" />
+      <created>1741341606658</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741341606658</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(dev): merge login and character_management together">
+      <option name="closed" value="true" />
+      <created>1741342323790</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741342323790</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(9): fix dice apply">
+      <option name="closed" value="true" />
+      <created>1741603177182</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741603177182</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(9): add race/class descriptions to characterDetail screen">
+      <option name="closed" value="true" />
+      <created>1741604474960</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1741604474960</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat(9): fix character_form.html to display the base stats values correctly">
+      <option name="closed" value="true" />
+      <created>1741613602015</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741613602015</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(9): fix character_form.html">
+      <option name="closed" value="true" />
+      <created>1741619074709</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1741619074709</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix(9): fix base.html">
+      <option name="closed" value="true" />
+      <created>1741619865053</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741619865053</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix(9): fix routing">
+      <option name="closed" value="true" />
+      <created>1741620921321</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1741620921321</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +268,14 @@
     <MESSAGE value="add some classes" />
     <MESSAGE value="zwischencommit" />
     <MESSAGE value="feat(2.0): implement character_management" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(2.0): implement character_management" />
+    <MESSAGE value="feat(2.0): fix namespace and implement populate_data.py" />
+    <MESSAGE value="feat(dev): merge login and character_management together" />
+    <MESSAGE value="feat(9): fix dice apply" />
+    <MESSAGE value="feat(9): add race/class descriptions to characterDetail screen" />
+    <MESSAGE value="feat(9): fix character_form.html to display the base stats values correctly" />
+    <MESSAGE value="feat(9): fix character_form.html" />
+    <MESSAGE value="fix(9): fix base.html" />
+    <MESSAGE value="fix(9): fix routing" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix routing" />
   </component>
 </project>
