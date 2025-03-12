@@ -3,11 +3,6 @@ from .models import Campaign, NPC, Event, Villain, Location
 from django.contrib.auth.models import User
 
 
-class CampaignForm(forms.ModelForm):
-    class Meta:
-        model = Campaign
-        fields = ['name', 'description', 'start_date', 'end_date']
-
 class CampaignCreateForm(forms.ModelForm):
     class Meta:
         model = Campaign
