@@ -67,6 +67,7 @@
 #         return self.file.name
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Campaign(models.Model):
@@ -74,6 +75,7 @@ class Campaign(models.Model):
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
+    # owner = models.ForeignKey(User, related_name='campaigns', on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.name

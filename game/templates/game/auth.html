@@ -26,6 +26,15 @@
             padding: 20px;
             border-radius: 10px;
         }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 85px - 40px); /* 100vh minus header and footer height */
+            padding: 20px;
+        }
+
         h1 {
             margin-bottom: 20px;
         }
@@ -98,10 +107,10 @@
             // If the clicked form is already active, just toggle it off, otherwise close both
             if (formId === 'login') {
                 loginForm.classList.toggle('active');
-                registerForm.classList.remove('active');  // Ensure register form is closed
+                registerForm.classList.remove('active');  
             } else if (formId === 'register') {
                 registerForm.classList.toggle('active');
-                loginForm.classList.remove('active');  // Ensure login form is closed
+                loginForm.classList.remove('active'); 
             }
         }
     </script>
@@ -128,7 +137,7 @@
             <form method="POST" action="{% url 'game:register' %}">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Nutzername" required>
-                <input type="email" name="email" placeholder="E-Mail" required>
+                <!-- <input type="email" name="email" placeholder="E-Mail" required> -->
                 <input type="password" name="password1" placeholder="Passwort" required>
                 <input type="password" name="password2" placeholder="Passwort bestätigen" required>
                 <button type="submit">Registrieren</button>

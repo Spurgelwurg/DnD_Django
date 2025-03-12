@@ -5,6 +5,15 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
+def campaigns_view(request):
+    return render(request, 'game/campaign_manager/campaigns.html')
+
+def campaigns_overview(request):
+    user_campaigns = Campaign.objects.all() 
+    return render(request, 'game/campaign_manager/campaigns_overview.html', {
+        'user_campaigns': user_campaigns,
+    })
+
 
 def campaign_list(request):
     campaign = Campaign.objects.all()
@@ -14,7 +23,7 @@ def campaign_list(request):
         campaign.delete()
         return redirect('campaign_manager:campaign_list')
     
-    return render(request, 'game/campaign_manager/campaign_list.html', {'campaigns': campaigns})
+    return render(request, 'game/campaign_manager/campaign_list.html', {'campaigns': campaign})
 
 
 def campaign_create(request):
