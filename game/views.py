@@ -47,6 +47,7 @@ class RegisterView(generic.View):
 def logout_view(request):
     logout(request)
     return redirect('game:login')
+    
 
 
 

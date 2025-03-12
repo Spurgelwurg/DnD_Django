@@ -1,11 +1,16 @@
 from django import forms
 from .models import Campaign, NPC, Event, Villain, Location
+from django.contrib.auth.models import User
 
 
-class CampaignForm(forms.ModelForm):
+class CampaignCreateForm(forms.ModelForm):
     class Meta:
         model = Campaign
-        fields = ['name', 'description', 'start_date', 'end_date']
+        fields = ['name', 'description', 'player_count', 'is_public', 'dm', 'start_date', 'is_oneshot', 'number_of_sessions']
+        
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+        }        
 
 
 class NPCForm(forms.ModelForm):

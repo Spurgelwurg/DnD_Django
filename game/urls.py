@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.views.generic import TemplateView
 from game import views
+from . import views
 from django.contrib.auth import views as auth_views
 
 app_name = "game"
@@ -15,7 +16,7 @@ urlpatterns = [
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('logout/', views.logout_view, name='logout'),
     path('character/', include('game.character_management.urls')),
-    path('campaign/', include('game.campaign_manager.urls')),
+    path('campaigns/', include('game.campaign_manager.urls')),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'), name='password_reset'),
     path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
