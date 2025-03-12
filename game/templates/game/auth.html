@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django DnD Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Obra+Letra&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Obra Letra', serif;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full screen height */
+        }
+        .auth-box {
+            text-align: center;
+            width: 100%;
+            max-width: 400px; /* Limits width of the auth box */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .toggle-button {
+            background-color: darkred;
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+            width: 100%; /* Make buttons span full width */
+        }
+        .toggle-button:hover {
+            background-color: #b80000;
+        }
+        .form-container {
+            display: none;
+            margin-top: 10px;
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            transition: max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+        }
+        .form-container.active {
+            display: block;
+            max-height: 500px;
+            margin-top: 20px; /* Moves the form up a bit when it is active */
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+            border-radius: 5px;
+            border: none;
+        }
+        button[type="submit"] {
+            background-color: darkred;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+        }
+        button[type="submit"]:hover {
+            background-color: #b80000;
+        }
+        .forgot-password {
+            color: white;
+            display: block;
+            margin-top: 5px;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function toggleForm(formId) {
+            // Close both forms
+            let loginForm = document.getElementById('login-form');
+            let registerForm = document.getElementById('register-form');
+
+            // If the clicked form is already active, just toggle it off, otherwise close both
+            if (formId === 'login') {
+                loginForm.classList.toggle('active');
+                registerForm.classList.remove('active');  // Ensure register form is closed
+            } else if (formId === 'register') {
+                registerForm.classList.toggle('active');
+                loginForm.classList.remove('active');  // Ensure login form is closed
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="auth-box">
+        <h1>Welcome to your <br> <span style="color: darkred; font-size: 2em;">DnD Manager</span></h1>
+        
+        <!-- Login Button -->
+        <button class="toggle-button" onclick="toggleForm('login')">Login</button>
+        <div id="login-form" class="form-container">
+            <form method="POST" action="{% url 'game:login' %}">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Nutzername" required>
+                <input type="password" name="password" placeholder="Passwort" required>
+                <button type="submit">Einloggen</button>
+            </form>
+            <a href="{% url 'game:password_reset' %}" class="forgot-password">Passwort vergessen?</a>
+        </div>
+        
+        <!-- Register Button -->
+        <button class="toggle-button" onclick="toggleForm('register')">Register</button>
+        <div id="register-form" class="form-container">
+            <form method="POST" action="{% url 'game:register' %}">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Nutzername" required>
+                <input type="email" name="email" placeholder="E-Mail" required>
+                <input type="password" name="password1" placeholder="Passwort" required>
+                <input type="password" name="password2" placeholder="Passwort bestätigen" required>
+                <button type="submit">Registrieren</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

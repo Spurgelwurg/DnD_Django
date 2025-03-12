@@ -114,3 +114,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AUTH_USER_MODEL = 'game.CustomUser'
+
+LOGIN_URL = 'game:login'
+LOGIN_REDIRECT_URL = 'game:index'
+LOGOUT_REDIRCT_URL = 'game:login'

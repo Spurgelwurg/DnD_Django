@@ -5,9 +5,9 @@ from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.decorators import login_required
 
-@login_required
+
 def campaign_list(request):
-    campaigns = Campaign.objects.all()
+    campaign = Campaign.objects.all()
     if request.method == 'POST':
         campaign_id = request.POST.get('campaign_id')
         campaign = get_object_or_404(Campaign, id=campaign_id)
@@ -16,7 +16,7 @@ def campaign_list(request):
     
     return render(request, 'game/campaign_manager/campaign_list.html', {'campaigns': campaigns})
 
-@login_required
+
 def campaign_create(request):
     if request.method == 'POST':
         form = CampaignForm(request.POST)
@@ -29,7 +29,7 @@ def campaign_create(request):
     return render(request, 'game/campaign_manager/campaign_form.html', {'form': form})
 
 
-@login_required
+
 def campaign_edit(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
 
@@ -44,7 +44,7 @@ def campaign_edit(request, campaign_id):
     return render(request, 'game/campaign_manager/campaign_form.html', {'form': form})
 
 
-@login_required
+
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
     npcs = campaign.npcs.all()
@@ -63,7 +63,7 @@ def campaign_detail(request, campaign_id):
     })
 
 
-@login_required
+
 def npc_create(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
 
@@ -80,7 +80,7 @@ def npc_create(request, campaign_id):
     return render(request, 'game/campaign_manager/npc_form.html', {'form': form, 'campaign': campaign})
 
 
-@login_required
+
 def npc_edit(request, npc_id):
     npc = get_object_or_404(NPC, id=npc_id)
 
@@ -95,7 +95,7 @@ def npc_edit(request, npc_id):
     return render(request, 'game/campaign_manager/npc_form.html', {'form': form})
 
 
-@login_required
+
 def event_create(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
 

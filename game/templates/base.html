@@ -3,94 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@400;700&display=swap">
     <title>{% block title %}DnD Django{% endblock %}</title>
     
     {% block style %}
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Spectral SC', serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
             margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
+        }
+        header {
+            width: 100%;
+            height: 85px;
+            position: relative;
+            top: 0;
+            left: 0;
+            background-color: #a60000;
+            color: white;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            justify-content: flex-start;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1000; /* Make sure header stays on top */
         }
-        .container {
-            background-color: #fff;
-            width: 100%;
-            max-width: 100%;
-            padding: 20px;        
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            border-radius: 8px;
-        }
-        input {
-            border-radius: 8px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-        form {
+        .navbar {
             display: flex;
-            flex-direction: column;
+            align-items: center;
         }
-        button {
-            background-color: #4CAF50;
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .navbar ul li {
+            margin: 0 22.5px; /* 45px spacing between items */
+        }
+        .navbar ul li a {
             color: white;
-            border: none;
-            margin: 5px 0 5px 0;
-            padding: 12px 16px;
-            border-radius: 5px;
-            max-width: 200px;
-            cursor: pointer;
-            font-size: larger;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .error {
-            color: red;
-            align-items: left;
-            text-align: left;
-        }
-        .field-error {
-            border-color: red;
-        }
-
-        nav {
-            width: 100%;
-            background-color: #333;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        nav a {
-            color: white;
-            padding: 10px 15px;
             text-decoration: none;
-            margin: 0 10px;
-            font-size: 16px;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
-
-        nav a:hover {
-            background-color: #575757;
+        .search-account {
+            display: flex;
+            align-items: center;
         }
-
+        .search-account input {
+            width: 260px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+        .account-icon {
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+        }
         footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #555;
+            background-color: black;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        main{
+            height: 100%;
         }
     </style>
     {% endblock %}
@@ -103,12 +87,21 @@
         </form>
     {% endif %}
     
-    <nav>
-        
-        <a href="{% url 'game:character_management:character_list' %}">Characters</a>
-        <a href="{% url 'game:campaign_manager:campaign_list' %}">Campaigns</a>
-        <a href="{% url 'game:character_management:roll_dice' %}">Roll Dice</a>
-    </nav>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/classes">Classes</a></li>
+                <li><a href="/species">Species</a></li>
+                <li><a href="/campaigns">Campaigns</a></li>
+                <li><a href="/characters">Characters</a></li>
+                <li><a href="/dice-goblins">Dice-Goblins</a></li>
+            </ul>
+        </nav>
+        <div class="search-account">
+            <input type="text" placeholder="Search...">
+            <a href="/account" class="account-icon">🔰</a>
+        </div>
+    </header>
     
     <main>
         {% block content %}{% endblock %}

@@ -10,6 +10,10 @@ class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = "game/index.html"
 
 
+
+def auth_view(request):
+    return render(request, 'game/auth.html')
+
 class LoginView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
         form = RegisterForm()
