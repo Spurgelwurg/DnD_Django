@@ -128,7 +128,7 @@
             <form method="POST" action="{% url 'game:register' %}">
                 {% csrf_token %}
                 <input type="text" name="username" placeholder="Nutzername" required>
-                <input type="email" name="email" placeholder="E-Mail" required>
+                <!-- <input type="email" name="email" placeholder="E-Mail" required> -->
                 <input type="password" name="password1" placeholder="Passwort" required>
                 <input type="password" name="password2" placeholder="Passwort bestätigen" required>
                 <button type="submit">Registrieren</button>
