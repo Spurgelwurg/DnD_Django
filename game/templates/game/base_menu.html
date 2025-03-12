@@ -3,11 +3,11 @@
 
 {% block header %}
     <h1>D&D Character Manager</h1>
-    <nav>
+    <nav style="display: flex; width: 100%;">
         <a href="{% url 'game:character_management:character_list' %}">Characters</a>
         <a href="{% url 'game:character_management:character_create' %}">Create Character</a>
         <a href="{% url 'game:character_management:roll_dice' %}">Dice Roller</a>
-        <a href="{% url 'game:logout' %}">Logout</a>
+        <a href="{% url 'game:logout' %}" style="margin-left: auto;">Logout</a>
     </nav>
 {% endblock %}
 
