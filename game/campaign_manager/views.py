@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Campaign, NPC, Event, Villain, Location
-from .forms import CampaignForm, NPCForm, EventForm, VillainForm, LocationForm
+from .forms import CampaignForm, NPCForm, EventForm, VillainForm, LocationForm, CampaignCreateForm
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -28,14 +28,16 @@ def campaign_list(request):
 
 def campaign_create(request):
     if request.method == 'POST':
-        form = CampaignForm(request.POST)
+        form = CampaignCreateForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('campaign_manager:campaign_list')
+            new_campaign = form.save(commit=False)
+            new_campaign.dm = request.user  
+            new_campaign.save()
+            return redirect('game:campaign_manager:campaigns_overview')  
     else:
-        form = CampaignForm()
+        form = CampaignCreateForm()
 
-    return render(request, 'game/campaign_manager/campaign_form.html', {'form': form})
+    return render(request, 'game/campaign_manager/campaign_create.html', {'form': form})
 
 
 

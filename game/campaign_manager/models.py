@@ -68,6 +68,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Campaign(models.Model):
@@ -75,6 +76,12 @@ class Campaign(models.Model):
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
+    player_count = models.IntegerField(choices=[(i, str(i))for i in range(1, 11)], default=1)
+    is_public = models.BooleanField(default=True)  
+    dm = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='dungeon_master', on_delete=models.CASCADE)
+    start_date = models.DateField()
+    is_oneshot = models.BooleanField(default=False)  
+    number_of_sessions = models.IntegerField(null=True, blank=True)  
     # owner = models.ForeignKey(User, related_name='campaigns', on_delete=models.CASCADE) 
 
     def __str__(self):

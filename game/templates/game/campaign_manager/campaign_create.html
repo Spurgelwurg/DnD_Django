@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Kampagne erstellen{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center text-warning">Neue Kampagne erstellen</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_name">Kampagnenname</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_description">Beschreibung</label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_player_count">Spieleranzahl</label>
+            {{ form.player_count }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_is_public">Öffentlich oder privat</label>
+            {{ form.is_public }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_dm">Dungeon Master</label>
+            {{ form.dm }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_start_date">Startzeit</label>
+            {{ form.start_date }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_is_oneshot">Oneshot oder Sessions</label>
+            {{ form.is_oneshot }}
+        </div>
+
+        <div class="form-group" id="sessions-group" style="display: none;">
+            <label for="id_number_of_sessions">Anzahl der Sessions</label>
+            {{ form.number_of_sessions }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Kampagne erstellen</button>
+    </form>
+
+    <script>
+        // Dynamische Anzeige der Sessions-Optionen basierend auf der Auswahl von Oneshot oder Sessions
+        document.getElementById('id_is_oneshot').addEventListener('change', function() {
+            const sessionsGroup = document.getElementById('sessions-group');
+            if (this.checked) {
+                sessionsGroup.style.display = 'none';
+            } else {
+                sessionsGroup.style.display = 'block';
+            }
+        });
+    </script>
+</div>
+{% endblock %}
