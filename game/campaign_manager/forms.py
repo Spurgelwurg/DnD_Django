@@ -11,6 +11,10 @@ class CampaignCreateForm(forms.ModelForm):
         widgets = {
             'start_date': forms.DateInput(attrs={'type': 'date'}),
         }        
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            # Setze den aktuellen Benutzer als GameMaster, wenn er eine Kampagne erstellt
+            self.fields['dm'].initial = self.instance.dm or self.initial.get('dm', None)
 
 
 class NPCForm(forms.ModelForm):

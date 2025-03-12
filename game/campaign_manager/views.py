@@ -4,6 +4,8 @@ from .forms import CampaignCreateForm, NPCForm, EventForm, VillainForm, Location
 from django.http import HttpResponse
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from game.campaign_manager.models import Campaign
+from game.character_management.models import Character
 
 def campaigns_view(request):
     return render(request, 'game/campaign_manager/campaigns.html')
@@ -39,19 +41,21 @@ def campaign_create(request):
 
     return render(request, 'game/campaign_manager/campaign_create.html', {'form': form})
 
-
-
-
-
-
-
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
     npcs = campaign.npcs.all()
     events = campaign.events.all()
     villains = campaign.villains.all()
     locations = campaign.locations.all()
-    user_characters = Character.objects.filter(user=request.user, campaign=campaign)
+    if request.user == campaign.dm:
+        characters = campaign.characters.all()  
+    else:
+        characters = campaign.characters.filter(owner=request.user) 
+
+    return render(request, 'game/campaign_manager/campaign_detail.html', {
+        'campaign': campaign,
+        'characters': characters,
+    })
 
     return render(request, 'game/campaign_manager/campaign_detail.html', {
         'campaign': campaign,

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Character, Race, SubRace, CharacterClass
+from game.campaign_manager.models import Campaign
 
 
 class DiceRollForm(forms.Form):
@@ -36,3 +37,8 @@ class CharacterForm(forms.ModelForm):
                 pass
         elif self.instance.pk and self.instance.race:
             self.fields['subrace'].queryset = SubRace.objects.filter(parent_race=self.instance.race)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['campaign'].queryset = Campaign.objects.filter(is_public=True)  
+
