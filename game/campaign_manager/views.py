@@ -12,9 +12,9 @@ def campaign_list(request):
         campaign_id = request.POST.get('campaign_id')
         campaign = get_object_or_404(Campaign, id=campaign_id)
         campaign.delete()
-        return redirect('campaign_manager:campaign_list')
+        return redirect('game:campaign_manager:campaign_list')
     
-    return render(request, 'game/campaign_manager/campaign_list.html', {'campaigns': campaigns})
+    return render(request, 'game/campaign_manager/campaign_list.html', {'campaigns': campaign})
 
 
 def campaign_create(request):

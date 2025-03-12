@@ -6,18 +6,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout, authenticate, login
 from game.forms import RegisterForm
 
-class IndexView(LoginRequiredMixin, generic.TemplateView):
-    template_name = "game/index.html"
+# class IndexView(LoginRequiredMixin, generic.TemplateView):
+#     template_name = "game/index.html"
 
-
-
-def auth_view(request):
-    return render(request, 'game/auth.html')
-
-class LoginView(generic.View):
+class AuthView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
         form = RegisterForm()
-        return render(request, 'game/login.html', {'form': form})
+        return render(request, 'game/auth.html', {'form': form})
 
     def post(self, request: HttpRequest) -> HttpResponse:
         username = request.POST.get('username')
@@ -27,7 +22,7 @@ class LoginView(generic.View):
         print(user)
         if user is not None:
             login(request, user)
-            return redirect('game:index')
+            return redirect('game:campaign_manager:campaign_list')
         else:
             return render(request, "game/login.html", {'error': 'Invalid username or password'})
 
@@ -47,7 +42,7 @@ class RegisterView(generic.View):
         else:
             messages.error(request, 'Registration failed. Please correct the errors below.')
         form_submitted = True
-        return render(request, 'game/register.html', {'form': form, 'form_submitted': form_submitted})
+        return render(request, 'game/auth.html', {'form': form, 'form_submitted': form_submitted})
 
 def logout_view(request):
     logout(request)

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'game',
     'game.campaign_manager',
+    'game.character_management',
 ]
 
 MIDDLEWARE = [
@@ -116,5 +117,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # AUTH_USER_MODEL = 'game.CustomUser'
 
 LOGIN_URL = 'game:login'
-LOGIN_REDIRECT_URL = 'game:index'
+LOGIN_REDIRECT_URL = 'game:campaign_manager:campaign_list'
 LOGOUT_REDIRCT_URL = 'game:login'
