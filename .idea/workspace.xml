@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix routing">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): add a tutorial to fix the init problem">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DnD_Django/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DnD_Django/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0002_characterclass_race_subrace_character.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0002_delete_empty.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0003_merge_20250307_1111.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0004_alter_character_charisma_and_more.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/migrations/0005_remove_character_character_class_and_more.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,7 +245,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741620921321</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix(9): fix init problem">
+      <option name="closed" value="true" />
+      <created>1741854171918</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1741854171918</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix(9): add a tutorial to fix the init problem">
+      <option name="closed" value="true" />
+      <created>1741854290861</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1741854290861</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,7 +291,9 @@
     <MESSAGE value="feat(9): fix character_form.html" />
     <MESSAGE value="fix(9): fix base.html" />
     <MESSAGE value="fix(9): fix routing" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix routing" />
+    <MESSAGE value="fix(9): fix init problem" />
+    <MESSAGE value="fix(9): add a tutorial to fix the init problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(9): add a tutorial to fix the init problem" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
