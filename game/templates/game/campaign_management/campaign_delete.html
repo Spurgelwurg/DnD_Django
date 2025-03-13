@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Delete Campaign</h1>
+
+<div class="warning">
+    <p>Are you sure you want to delete the campaign "{{ campaign.name }}"?</p>
+    <p>This will delete all associated sessions and character associations.</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Yes, Delete Campaign</button>
+    <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Cancel</a>
+</form>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .warning {
+        background-color: #ffeaa7;
+        padding: 15px;
+        border-left: 5px solid #fdcb6e;
+        margin-bottom: 20px;
+    }
+
+    .delete-button {
+        background-color: #e74c3c;
+    }
+
+    .delete-button:hover {
+        background-color: #c0392b;
+    }
+</style>
+{% endblock %}
