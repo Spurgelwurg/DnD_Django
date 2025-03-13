@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="fix(9): fix routing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/character_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/character_management/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/character_management/character_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DnD_Django/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DnD_Django/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0002_characterclass_race_subrace_character.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0002_delete_empty.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0003_merge_20250307_1111.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0004_alter_character_charisma_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/migrations/0005_remove_character_character_class_and_more.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dev" />
+        <entry key="$PROJECT_DIR$" value="character_management_2.0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -39,23 +44,23 @@
     &quot;assignee&quot;: &quot;JashaPierre&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Spurgelwurg/DnD_Django.git",
-    "accountId": "8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Spurgelwurg/DnD_Django.git&quot;,
+    &quot;accountId&quot;: &quot;8cd1d5e6-e1f2-4a10-8af2-a13dcf3960f9&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Spurgelwurg",
-    "repository": "DnD_Django"
+    &quot;owner&quot;: &quot;Spurgelwurg&quot;,
+    &quot;repository&quot;: &quot;DnD_Django&quot;
   },
-  "highlightDiffLinesInEditor": true
-}]]></component>
+  &quot;highlightDiffLinesInEditor&quot;: true
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -77,8 +82,9 @@
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
     "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "#9 on character__management__2.0",
+    "git-widget-placeholder": "campaign-verwaltung-new",
     "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -277,5 +283,16 @@
     <MESSAGE value="fix(9): fix base.html" />
     <MESSAGE value="fix(9): fix routing" />
     <option name="LAST_COMMIT_MESSAGE" value="fix(9): fix routing" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="django-line">
+          <url>file://$PROJECT_DIR$/game/templates/game/character_management/character_form.html</url>
+          <line>38</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
