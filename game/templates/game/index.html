@@ -2,13 +2,36 @@
 {% load static %}
 
 {% block content %}
-<h1>Welcome to D&D Character Manager</h1>
+<h1>Welcome to D&D Manager</h1>
 
-<p>This application helps you manage your Dungeons & Dragons characters.</p>
+{% endblock %}
 
-<div class="menu-buttons">
-    <a href="{% url 'game:character_management:character_list' %}" class="button">View Characters</a>
-    <a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
-    <a href="{% url 'game:character_management:roll_dice' %}" class="button">Roll Dice</a>
-</div>
+{% block extra_head %}
+<style>
+    .main-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .menu-option {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        width: 300px;
+        text-align: center;
+    }
+
+    .menu-option h2 {
+        margin-top: 0;
+    }
+
+    .menu-option .button {
+        margin-top: 15px;
+        display: block;
+    }
+</style>
 {% endblock %}

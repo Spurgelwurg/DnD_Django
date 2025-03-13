@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ campaign.name }}</h1>
+
+<div class="campaign-details">
+    <p><strong>Description:</strong> {{ campaign.description }}</p>
+    {% if campaign.start_date %}<p><strong>Start Date:</strong> {{ campaign.start_date }}</p>{% endif %}
+    <p><strong>Status:</strong> {% if campaign.is_active %}Active{% else %}Inactive{% endif %}</p>
+
+    <div class="action-buttons">
+        <a href="{% url 'game:campaign_management:campaign_edit' campaign.id %}" class="button">Edit Campaign</a>
+        <a href="{% url 'game:campaign_management:campaign_delete' campaign.id %}" class="button">Delete Campaign</a>
+    </div>
+</div>
+
+<h2>Characters</h2>
+{% if characters %}
+    <ul class="character-list">
+        {% for campaign_char in characters %}
+            <li>
+                <a href="{% url 'game:character_management:character_detail' campaign_char.character.id %}">
+                    {{ campaign_char.character.name }}
+                    ({{ campaign_char.character.character_class.name }})
+                </a>
+                {% if campaign_char.is_player_character %}
+                    <span class="pc-badge">PC</span>
+                {% else %}
+                    <span class="npc-badge">NPC</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No characters in this campaign yet.</p>
+{% endif %}
+
+<h2>Sessions</h2>
+{% if sessions %}
+    <ul class="session-list">
+        {% for session in sessions %}
+            <li>
+                <strong>Session {{ session.session_number }}</strong> - {{ session.date }}
+                <p>{{ session.summary }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No sessions recorded yet.</p>
+{% endif %}
+
+<a href="{% url 'game:campaign_management:campaign_list' %}" class="button">Back to Campaign List</a>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .pc-badge {
+        background-color: #3498db;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 5px;
+    }
+
+    .npc-badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 5px;
+    }
+
+    .session-list li {
+        background: white;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}

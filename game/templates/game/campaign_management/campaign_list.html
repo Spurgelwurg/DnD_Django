@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Campaigns</h1>
+
+<a href="{% url 'game:campaign_management:campaign_create' %}" class="button">Create New Campaign</a>
+
+{% if campaigns %}
+    <ul class="campaign-list">
+        {% for campaign in campaigns %}
+            <li>
+                <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}">
+                    {{ campaign.name }}
+                    {% if campaign.is_active %}<span class="active-badge">Active</span>{% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No campaigns available. Create one!</p>
+{% endif %}
+
+<a href="{% url 'game:index' %}" class="button">Back to Main Menu</a>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .active-badge {
+        background-color: #2ecc71;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 8px;
+        font-size: 0.8em;
+    }
+</style>
+{% endblock %}

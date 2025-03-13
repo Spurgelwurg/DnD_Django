@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     
     path('character/', include('game.character_management.urls')),
+    path('campaign/', include('game.campaign_management.urls')),
 ]
