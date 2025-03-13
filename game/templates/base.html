@@ -81,28 +81,7 @@
     {% endblock %}
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <form method="post" action="{% url 'game:logout' %}">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    {% endif %}
-    
-    <header>
-        <nav class="navbar">
-            <ul>
-                <li><a href="/classes">Classes</a></li>
-                <li><a href="/species">Species</a></li>
-                <li><a href="{% url 'game:campaign_manager:campaigns_overview' %}">Campaigns</a></li>
-                <li><a href="/characters">Characters</a></li>
-                <li><a href="/dice-goblins">Dice-Goblins</a></li>
-            </ul>
-        </nav>
-        <div class="search-account">
-            <input type="text" placeholder="Search...">
-            <a href="/account" class="account-icon">🔰</a>
-        </div>
-    </header>
+    {% block navbar %}{% endblock %}
     
     <main>
         {% block content %}{% endblock %}
