@@ -11,8 +11,8 @@ urlpatterns = [
     #path('roll_ability_scores/',  name='roll_ability_scores'),
     path('get_subrace/', views.get_subrace, name='get_subrace'),
 
-path('<int:character_id>/edit/', views.character_edit, name='character_edit'),
-path('<int:character_id>/delete/', views.character_delete, name='character_delete'),
-path('get_race_details/', views.get_race_details, name='get_race_details'),
-path('get_class_details/', views.get_class_details, name='get_class_details'),
+    path('<int:character_id>/edit/', views.character_edit, name='character_edit'),
+    path('<int:character_id>/delete/', views.character_delete, name='character_delete'),
+    path('get_race_details/', views.get_race_details, name='get_race_details'),
+    path('get_class_details/', views.get_class_details, name='get_class_details'),
 ]

@@ -3,11 +3,14 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
 from game.forms import RegisterForm
 
-class IndexView(LoginRequiredMixin, generic.TemplateView):
-    template_name = "game/index.html"
+@login_required(login_url='game:login')
+def indexView(request):
+    print("loading")
+    return render(request, 'game/index.html')
 
 class LoginView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
