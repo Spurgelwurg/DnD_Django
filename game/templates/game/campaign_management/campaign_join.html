@@ -1,0 +1,25 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Join a Campaign</h1>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="join_code">Enter Campaign Join Code:</label>
+        <input type="text" id="join_code" name="join_code" required>
+    </div>
+    <button type="submit" class="button">Join Campaign</button>
+</form>
+<a href="{% url 'game:campaign_management:campaign_list' %}" class="button">Back to Campaigns</a>
+{% endblock %}

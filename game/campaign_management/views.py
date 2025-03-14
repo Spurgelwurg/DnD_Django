@@ -1,6 +1,8 @@
+from pyexpat.errors import messages
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from .models import Campaign, CampaignSession, CampaignCharacter
+from .models import Campaign, CampaignSession, CampaignCharacter, CampaignPlayer
 from .forms import CampaignForm, CampaignSessionForm, CampaignCharacterForm
 
 from django.contrib.auth.decorators import login_required
@@ -84,12 +86,20 @@ class CampaignListView(ListView):
     template_name = 'game/campaign_management/campaign_list.html'
     context_object_name = 'campaigns'
 
-
+@login_required
 def campaign_create(request):
     if request.method == 'POST':
         form = CampaignForm(request.POST)
         if form.is_valid():
             campaign = form.save()
+            campaign.creator = request.user
+            campaign.save()
+            # Add creator as game master
+            CampaignPlayer.objects.create(
+                user=request.user,
+                campaign=campaign,
+                is_game_master=True
+            )
             return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
     else:
         form = CampaignForm()
@@ -101,13 +111,23 @@ def campaign_create(request):
 
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    # Check if user is part of this campaign
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+        is_game_master = player.is_game_master
+    except CampaignPlayer.DoesNotExist:
+        return redirect('game:campaign_management:campaign_list')
+
     sessions = campaign.sessions.all().order_by('session_number')
     characters = campaign.characters.all()
+    players = CampaignPlayer.objects.filter(campaign=campaign)
 
     return render(request, 'game/campaign_management/campaign_detail.html', {
         'campaign': campaign,
         'sessions': sessions,
-        'characters': characters
+        'characters': characters,
+        'players': players,
+        'is_game_master': is_game_master
     })
 
 
@@ -136,5 +156,69 @@ def campaign_delete(request, campaign_id):
         return redirect('game:campaign_management:campaign_list')
 
     return render(request, 'game/campaign_management/campaign_delete.html', {
+        'campaign': campaign
+    })
+
+
+@login_required
+def campaign_join(request):
+    if request.method == 'POST':
+        join_code = request.POST.get('join_code')
+        try:
+            campaign = Campaign.objects.get(join_code=join_code)
+            # Check if user is already in campaign
+            if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+                CampaignPlayer.objects.create(user=request.user, campaign=campaign)
+                messages.success(request, f"You've joined the campaign: {campaign.name}")
+            else:
+                messages.info(request, "You're already a member of this campaign")
+            return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+        except Campaign.DoesNotExist:
+            messages.error(request, "Invalid join code. Please try again.")
+
+    return render(request, 'game/campaign_management/campaign_join.html')
+
+
+@login_required
+def manage_players(request, campaign_id):
+    campaign = get_object_or_404(Campaign, id=campaign_id)
+    # Check if user is game master
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign, is_game_master=True).exists():
+        messages.error(request, "Only the game master can manage players")
+        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+
+    players = CampaignPlayer.objects.filter(campaign=campaign)
+
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        player_id = request.POST.get('player_id')
+
+        if action == 'remove' and player_id:
+            player = get_object_or_404(CampaignPlayer, id=player_id, campaign=campaign)
+            player.delete()
+            messages.success(request, f"{player.user.username} has been removed from the campaign")
+
+    return render(request, 'game/campaign_management/manage_players.html', {
+        'campaign': campaign,
+        'players': players
+    })
+
+
+@login_required
+def leave_campaign(request, campaign_id):
+    campaign = get_object_or_404(Campaign, id=campaign_id)
+    player = get_object_or_404(CampaignPlayer, user=request.user, campaign=campaign)
+
+    # Don't allow the game master to leave
+    if player.is_game_master:
+        messages.error(request, "As the game master, you cannot leave the campaign. You must delete it instead.")
+        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+
+    if request.method == 'POST':
+        player.delete()
+        messages.success(request, f"You have left the campaign: {campaign.name}")
+        return redirect('game:campaign_management:campaign_list')
+
+    return render(request, 'game/campaign_management/leave_campaign.html', {
         'campaign': campaign
     })

@@ -13,4 +13,7 @@ urlpatterns = [
     path('<int:campaign_id>/chapters/<int:chapter_id>/', views.chapter_detail, name='chapter_detail'),
     path('<int:campaign_id>/chapters/<int:chapter_id>/edit/', views.chapter_edit, name='chapter_edit'),
     path('<int:campaign_id>/chapters/<int:chapter_id>/delete/', views.chapter_delete, name='chapter_delete'),
+    path('join/', views.campaign_join, name='campaign_join'),
+    path('<int:campaign_id>/players/', views.manage_players, name='manage_players'),
+    path('<int:campaign_id>/leave/', views.leave_campaign, name='leave_campaign'),
 ]
