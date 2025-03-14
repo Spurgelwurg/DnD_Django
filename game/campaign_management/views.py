@@ -91,9 +91,10 @@ def campaign_create(request):
     if request.method == 'POST':
         form = CampaignForm(request.POST)
         if form.is_valid():
-            campaign = form.save()
+            campaign = form.save(commit=False)
             campaign.creator = request.user
             campaign.save()
+            
             # Add creator as game master
             CampaignPlayer.objects.create(
                 user=request.user,
@@ -107,7 +108,6 @@ def campaign_create(request):
     return render(request, 'game/campaign_management/campaign_form.html', {
         'form': form
     })
-
 
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
@@ -168,6 +168,11 @@ def campaign_join(request):
             campaign = Campaign.objects.get(join_code=join_code)
             # Check if user is already in campaign
             if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+                # Check if campaign is full
+                if campaign.is_full:
+                    messages.error(request, f"Sorry, the campaign '{campaign.name}' is already full ({campaign.current_player_count}/{campaign.max_players} players)")
+                    return render(request, 'game/campaign_management/campaign_join.html')
+                
                 CampaignPlayer.objects.create(user=request.user, campaign=campaign)
                 messages.success(request, f"You've joined the campaign: {campaign.name}")
             else:

@@ -7,11 +7,14 @@
         <p><strong>Description:</strong> {{ campaign.description }}</p>
         {% if campaign.start_date %}<p><strong>Start Date:</strong> {{ campaign.start_date }}</p>{% endif %}
         <p><strong>Status:</strong> {% if campaign.is_active %}Active{% else %}Inactive{% endif %}</p>
+        <p><strong>Players:</strong> {{ campaign.current_player_count }} / {{ campaign.max_players }}</p>
+        
         {% if is_game_master %}
             <div class="join-code-section">
                 <h3>Join Code</h3>
                 <p>Share this code with players to invite them:</p>
                 <div class="join-code">{{ campaign.join_code }}</div>
+                <p class="copy-hint">Click to copy</p>
             </div>
         {% endif %}
 
@@ -29,7 +32,7 @@
         </div>
     </div>
 
-    <h2>Players</h2>
+    <h2>Players ({{ campaign.current_player_count }} / {{ campaign.max_players }})</h2>
     <ul class="player-list">
         {% for player in players %}
             <li>
@@ -42,7 +45,7 @@
     <h2>Characters</h2>
     {% if characters %}
         <ul class="character-list">
-            {% for campaign_char in characters %}
+            {% for campaign_char in characters %} 
                 <li>
                     <a href="{% url 'game:character_management:character_detail' campaign_char.character.id %}">
                         {{ campaign_char.character.name }}
@@ -118,5 +121,55 @@
             border-radius: 5px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
+
+        .join-code-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px dashed #ccc;
+        }
+        
+        .join-code {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #2c3e50;
+            letter-spacing: 2px;
+        }
+        
+        .copy-hint {
+            text-align: center;
+            color: #666;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        
+        .gm-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
     </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const joinCodeElement = document.querySelector('.join-code');
+            if (joinCodeElement) {
+                joinCodeElement.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent.trim()).then(() => {
+                        alert('Join code copied to clipboard!');
+                    });
+                });
+            }
+        });
+    </script>
 {% endblock %}

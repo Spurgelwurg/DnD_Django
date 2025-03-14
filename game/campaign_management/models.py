@@ -12,10 +12,9 @@ class Campaign(models.Model):
     start_date = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     join_code = models.CharField(max_length=8, unique=True, blank=True)
-    #creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_campaigns")
-    #players = models.ManyToManyField(User, through='CampaignPlayer', related_name="joined_campaigns")
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_campaigns')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_campaigns', null=True, blank=True)
     players = models.ManyToManyField(settings.AUTH_USER_MODEL, through='CampaignPlayer', related_name='campaigns')
+    max_players = models.PositiveIntegerField(default=5, help_text="Maximum number of players allowed in this campaign")
 
     def save(self, *args, **kwargs):
         if not self.join_code:
@@ -25,10 +24,21 @@ class Campaign(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def current_player_count(self):
+        return self.players.count()
+    
+    @property
+    def is_full(self):
+        return self.current_player_count >= self.max_players
+    
+    @property
+    def spots_remaining(self):
+        return max(0, self.max_players - self.current_player_count)
 
 
 class CampaignPlayer(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -58,6 +68,7 @@ class CampaignCharacter(models.Model):
 
     def __str__(self):
         return f"{self.character.name} in {self.campaign.name}"
+
 
 class Chapter(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="chapters")
