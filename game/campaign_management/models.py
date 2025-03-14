@@ -29,3 +29,15 @@ class CampaignCharacter(models.Model):
 
     def __str__(self):
         return f"{self.character.name} in {self.campaign.name}"
+
+class Chapter(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="chapters")
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    order = models.IntegerField(default=1)  # To organize chapters sequentially
+
+    class Meta:
+        ordering = ['order']  # Always return chapters in proper order
+
+    def __str__(self):
+        return f"{self.campaign.name} - Chapter {self.order}: {self.title}"

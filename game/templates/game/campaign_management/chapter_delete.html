@@ -1,0 +1,16 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Delete Chapter</h1>
+
+<div class="warning">
+    <p>Are you sure you want to delete the chapter "{{ chapter.title }}"?</p>
+    <p>This will permanently remove this chapter from the campaign "{{ campaign.name }}".</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Yes, Delete Chapter</button>
+    <a href="{% url 'game:campaign_management:chapter_detail' campaign.id chapter.id %}" class="button">Cancel</a>
+</form>
+{% endblock %}

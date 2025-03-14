@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'game',
     'game.character_management',
+    'game.campaign_management',
 ]
 
 MIDDLEWARE = [

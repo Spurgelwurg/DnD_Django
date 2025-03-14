@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="refactor/refactor(_): reorganize url structure, implement a first design of the campaign">
+      <change afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/chapter_delete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/chapter_detail.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/chapter_edit.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/chapter_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DnD_Django/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DnD_Django/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +86,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "character__management__2.0__merge__with__login",
+    "git-widget-placeholder": "campaign__management__remake",
     "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -263,7 +273,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="campaign_management_remake" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

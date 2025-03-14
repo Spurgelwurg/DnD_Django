@@ -34,6 +34,22 @@
 {% else %}
     <p>No characters in this campaign yet.</p>
 {% endif %}
+    <h2>Chapters</h2>
+<a href="{% url 'game:campaign_management:chapter_create' campaign.id %}" class="button">Add Chapter</a>
+
+{% if campaign.chapters.exists %}
+    <ul class="chapter-list">
+        {% for chapter in campaign.chapters.all %}
+            <li>
+                <a href="{% url 'game:campaign_management:chapter_detail' campaign.id chapter.id %}">
+                    <span class="chapter-order">{{ chapter.order }}.</span> {{ chapter.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No chapters added to this campaign yet.</p>
+{% endif %}
 
 <h2>Sessions</h2>
 {% if sessions %}

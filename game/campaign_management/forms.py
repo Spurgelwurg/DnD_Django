@@ -1,5 +1,6 @@
 from django import forms
-from .models import Campaign, CampaignSession, CampaignCharacter
+from .models import Campaign, CampaignSession, CampaignCharacter, Chapter
+
 
 class CampaignForm(forms.ModelForm):
     class Meta:
@@ -21,3 +22,11 @@ class CampaignCharacterForm(forms.ModelForm):
     class Meta:
         model = CampaignCharacter
         fields = ['character', 'is_player_character']
+
+class ChapterForm(forms.ModelForm):
+    class Meta:
+        model = Chapter
+        fields = ['title', 'description', 'order']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 5}),
+        }
