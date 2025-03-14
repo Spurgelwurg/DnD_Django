@@ -39,6 +39,9 @@
     <form method="post" style="min-width: 20%;">
       <div>
         {% csrf_token %}
+        {% if error and attempted_login %}
+          <div style="color: red; margin-bottom: 10px;">{{ error }}</div>
+        {% endif %}
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required /><br />
         <label for="password">Password:</label>

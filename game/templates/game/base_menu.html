@@ -3,6 +3,15 @@
 
 {% block header %}
     <h1>D&D Character Manager</h1>
+
+    <div style="display: flex; justify-content: right; align-items: center; padding: 10px;">
+        {% if user.is_authenticated %}
+            <div style="text-align: right; margin-left: auto;">
+                Logged in as: {{ user.username }}
+            </div>
+        {% endif %}
+    </div>
+
     <nav style="display: flex; width: 100%;">
         <a href="{% url 'game:index' %}">Home</a>
         <a href="{% url 'game:character_management:character_list' %}">Characters</a>
@@ -11,5 +20,6 @@
         <a href="{% url 'game:logout' %}" style="margin-left: auto;">Logout</a>
     </nav>
 {% endblock %}
+
 
 
