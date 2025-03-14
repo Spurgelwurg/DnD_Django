@@ -1,18 +1,27 @@
-from pyexpat.errors import messages
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 from .models import Campaign, CampaignSession, CampaignCharacter, CampaignPlayer
 from .forms import CampaignForm, CampaignSessionForm, CampaignCharacterForm
-
+from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from .models import Campaign, CampaignSession, CampaignCharacter, Chapter
 from .forms import CampaignForm, CampaignSessionForm, CampaignCharacterForm, ChapterForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 @login_required
 def chapter_create(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+        
+    # Check if user is game master (only GMs should create chapters)
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign, is_game_master=True).exists():
+        messages.error(request, "Only game masters can create chapters.")
+        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
 
     if request.method == 'POST':
         form = ChapterForm(request.POST)
@@ -37,6 +46,12 @@ def chapter_create(request, campaign_id):
 @login_required
 def chapter_detail(request, campaign_id, chapter_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+        
     chapter = get_object_or_404(Chapter, id=chapter_id, campaign=campaign)
 
     return render(request, 'game/campaign_management/chapter_detail.html', {
@@ -48,6 +63,17 @@ def chapter_detail(request, campaign_id, chapter_id):
 @login_required
 def chapter_edit(request, campaign_id, chapter_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+        
+    # Check if user is game master (only GMs should edit chapters)
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign, is_game_master=True).exists():
+        messages.error(request, "Only game masters can edit chapters.")
+        return redirect('game:campaign_management:chapter_detail', campaign_id=campaign.id, chapter_id=chapter_id)
+        
     chapter = get_object_or_404(Chapter, id=chapter_id, campaign=campaign)
 
     if request.method == 'POST':
@@ -70,6 +96,17 @@ def chapter_edit(request, campaign_id, chapter_id):
 @login_required
 def chapter_delete(request, campaign_id, chapter_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+        
+    # Check if user is game master (only GMs should delete chapters)
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign, is_game_master=True).exists():
+        messages.error(request, "Only game masters can delete chapters.")
+        return redirect('game:campaign_management:chapter_detail', campaign_id=campaign.id, chapter_id=chapter_id)
+        
     chapter = get_object_or_404(Chapter, id=chapter_id, campaign=campaign)
 
     if request.method == 'POST':
@@ -81,10 +118,14 @@ def chapter_delete(request, campaign_id, chapter_id):
         'chapter': chapter
     })
 
-class CampaignListView(ListView):
+class CampaignListView(LoginRequiredMixin, ListView):
     model = Campaign
     template_name = 'game/campaign_management/campaign_list.html'
     context_object_name = 'campaigns'
+    
+    def get_queryset(self):
+        # Only show campaigns the current user is part of
+        return Campaign.objects.filter(players=self.request.user)
 
 @login_required
 def campaign_create(request):
@@ -109,6 +150,7 @@ def campaign_create(request):
         'form': form
     })
 
+@login_required
 def campaign_detail(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
     # Check if user is part of this campaign
@@ -116,6 +158,7 @@ def campaign_detail(request, campaign_id):
         player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
         is_game_master = player.is_game_master
     except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
         return redirect('game:campaign_management:campaign_list')
 
     sessions = campaign.sessions.all().order_by('session_number')
@@ -131,8 +174,19 @@ def campaign_detail(request, campaign_id):
     })
 
 
+@login_required
 def campaign_edit(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign and is a game master
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+        if not player.is_game_master:
+            messages.error(request, "Only game masters can edit campaigns.")
+            return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
 
     if request.method == 'POST':
         form = CampaignForm(request.POST, instance=campaign)
@@ -148,8 +202,19 @@ def campaign_edit(request, campaign_id):
     })
 
 
+@login_required
 def campaign_delete(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign and is a game master
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+        if not player.is_game_master:
+            messages.error(request, "Only game masters can delete campaigns.")
+            return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
 
     if request.method == 'POST':
         campaign.delete()
@@ -188,9 +253,14 @@ def campaign_join(request):
 def manage_players(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
     # Check if user is game master
-    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign, is_game_master=True).exists():
-        messages.error(request, "Only the game master can manage players")
-        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+        if not player.is_game_master:
+            messages.error(request, "Only the game master can manage players")
+            return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
 
     players = CampaignPlayer.objects.filter(campaign=campaign)
 
@@ -212,7 +282,12 @@ def manage_players(request, campaign_id):
 @login_required
 def leave_campaign(request, campaign_id):
     campaign = get_object_or_404(Campaign, id=campaign_id)
-    player = get_object_or_404(CampaignPlayer, user=request.user, campaign=campaign)
+    
+    try:
+        player = get_object_or_404(CampaignPlayer, user=request.user, campaign=campaign)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You're not part of this campaign.")
+        return redirect('game:campaign_management:campaign_list')
 
     # Don't allow the game master to leave
     if player.is_game_master:

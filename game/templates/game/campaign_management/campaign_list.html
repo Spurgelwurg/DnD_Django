@@ -1,9 +1,12 @@
 {% extends 'game/base_menu.html' %}
 
 {% block content %}
-<h1>Campaigns</h1>
+<h1>Your Campaigns</h1>
 
-<a href="{% url 'game:campaign_management:campaign_create' %}" class="button">Create New Campaign</a>
+<div class="action-buttons">
+    <a href="{% url 'game:campaign_management:campaign_create' %}" class="button">Create New Campaign</a>
+    <a href="{% url 'game:campaign_management:campaign_join' %}" class="button">Join Campaign</a>
+</div>
 
 {% if campaigns %}
     <ul class="campaign-list">
@@ -13,11 +16,16 @@
                     {{ campaign.name }}
                     {% if campaign.is_active %}<span class="active-badge">Active</span>{% endif %}
                 </a>
+                {% for player in campaign.campaignplayer_set.all %}
+                    {% if player.user == request.user and player.is_game_master %}
+                        <span class="gm-badge">GM</span>
+                    {% endif %}
+                {% endfor %}
             </li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>No campaigns available. Create one!</p>
+    <p>You are not part of any campaigns yet. Create one or join an existing campaign!</p>
 {% endif %}
 
 <a href="{% url 'game:index' %}" class="button">Back to Main Menu</a>
@@ -32,6 +40,21 @@
         border-radius: 3px;
         margin-left: 8px;
         font-size: 0.8em;
+    }
+    
+    .gm-badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-left: 8px;
+        font-size: 0.8em;
+    }
+    
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
     }
 </style>
 {% endblock %}
