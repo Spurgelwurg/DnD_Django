@@ -299,29 +299,31 @@
         }
 
         // Show calculation breakdown ABOVE ability score
-        // TODO(jmeusel): this func should not be used to show in the UI
-        // In the UI should only the ability score be shown
         function showAbilityCalculation(ability, rollValue, racialMod) {
             const calcDiv = document.getElementById(`calc_${ability}`);
-
-            // Create calculation display
-            let formula = `<strong>${BASE_ABILITY_SCORE}`;
-
-            if (rollValue > 0) {
-                formula += ` + Roll ${rollValue}`;
+            let formula = '<strong>';
+            
+        
+            if (rollValue > 0 || racialMod !== 0) {
+                if (rollValue > 0) {
+                    formula += `+ Roll ${rollValue}`;
+                    
+                    if (racialMod !== 0) {
+                        formula += ` ${racialMod > 0 ? '+' : ''} ${racialMod}`;
+                    }
+                } else if (racialMod !== 0) {
+            
+                    formula += `${racialMod > 0 ? '+' : ''} ${racialMod}`;
+                }
             }
-
-            if (racialMod !== 0) {
-                formula += ` ${racialMod > 0 ? '+' : ''} ${racialMod}`;
-            }
-
+            
             formula += '</strong>';
-
-            // Add warning if value exceeds 20
+            
+            // Add warning for over 20
             if (BASE_ABILITY_SCORE + rollValue + racialMod > 20) {
                 formula += ' <em class="warning">(Capped at 20)</em>';
             }
-
+            
             calcDiv.innerHTML = formula;
         }
 
