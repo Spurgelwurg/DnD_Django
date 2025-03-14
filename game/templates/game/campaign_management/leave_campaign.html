@@ -1,0 +1,35 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Leave Campaign</h1>
+
+<div class="warning">
+    <p>Are you sure you want to leave the campaign "{{ campaign.name }}"?</p>
+    <p>You will no longer have access to this campaign's content.</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="delete-button">Yes, Leave Campaign</button>
+    <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Cancel</a>
+</form>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .warning {
+        background-color: #ffeaa7;
+        padding: 15px;
+        border-left: 5px solid #fdcb6e;
+        margin-bottom: 20px;
+    }
+
+    .delete-button {
+        background-color: #e74c3c;
+    }
+
+    .delete-button:hover {
+        background-color: #c0392b;
+    }
+</style>
+{% endblock %}
