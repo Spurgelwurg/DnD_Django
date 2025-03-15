@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, authenticate, login
-from game.forms import RegisterForm
+from game.forms import RegisterForm, LoginForm
 
 @login_required(login_url='game:login')
 def indexView(request):
@@ -14,7 +14,7 @@ def indexView(request):
 
 class LoginView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        form = RegisterForm()
+        form = LoginForm()
         return render(request, 'game/login.html', {
             'form': form,
             'attempted_login': False  # Add this flag

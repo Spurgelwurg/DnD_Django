@@ -13,9 +13,9 @@ class RegisterForm(UserCreationForm):
         model = DnDUser
         fields = ['username', 'email']
     
-    # Reroder the default form fields
+    # Reorder the default form fields
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
-        keys = list(self.fields.keys())
-        new_order = keys[0:1] + keys[-1:] + keys[1:-1]
-        self.fields = {key: self.fields[key] for key in new_order}
+        # Put fields in this order: username, password1, password2, email
+        field_order = ['username', 'password1', 'password2', 'email']
+        self.fields = {key: self.fields[key] for key in field_order if key in self.fields}
