@@ -1,0 +1,13 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>{% if chapter %}Edit Chapter{% else %}Create New Chapter{% endif %}</h1>
+<h2>Campaign: {{ campaign.name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Chapter</button>
+    <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Cancel</a>
+</form>
+{% endblock %}

@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="refactor/refactor(_): reorganize url structure, implement a first design of the campaign">
+    <list default="true" id="a8862f12-1213-4d3b-8576-e0063fe0e2ad" name="Changes" comment="feat(campaign remake): extend campaign for chapters">
+      <change afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/campaign_join.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/campaign_management/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/campaign_management/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/templates/game/campaign_management/campaign_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/game/templates/game/campaign_management/campaign_detail.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +81,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "django.template.preview.state": "SHOW_EDITOR",
-    "git-widget-placeholder": "character__management__2.0__merge__with__login",
+    "git-widget-placeholder": "campaign__management__remake",
     "last_opened_file_path": "/Users/jashameusel/PycharmProjects/DnD_Django/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -252,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741873488625</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat(campaign remake): extend campaign for chapters">
+      <option name="closed" value="true" />
+      <created>1741938331426</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1741938331426</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +276,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="campaign_management_remake" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -283,6 +308,7 @@
     <MESSAGE value="fix(9): fix base.html" />
     <MESSAGE value="fix(9): fix routing" />
     <MESSAGE value="refactor/refactor(_): reorganize url structure, implement a first design of the campaign" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor/refactor(_): reorganize url structure, implement a first design of the campaign" />
+    <MESSAGE value="feat(campaign remake): extend campaign for chapters" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(campaign remake): extend campaign for chapters" />
   </component>
 </project>

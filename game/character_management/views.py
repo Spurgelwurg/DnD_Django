@@ -17,7 +17,9 @@ def character_create(request):
     if request.method == 'POST':
         form = CharacterForm(request.POST)
         if form.is_valid():
-            character = form.save()
+            character = form.save(commit=False)
+            character.user = request.user  # Set the character's user to current user
+            character.save()
             return redirect('game:character_management:character_detail', character_id=character.id)
     else:
         form = CharacterForm()

@@ -1,0 +1,19 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Chapter: {{ chapter.title }}</h1>
+<h3>Campaign: <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}">{{ campaign.name }}</a></h3>
+
+<div class="chapter-content">
+    <p><strong>Order:</strong> {{ chapter.order }}</p>
+    <div class="chapter-description">
+        {{ chapter.description|linebreaks }}
+    </div>
+</div>
+
+<div class="action-buttons">
+    <a href="{% url 'game:campaign_management:chapter_edit' campaign.id chapter.id %}" class="button">Edit Chapter</a>
+    <a href="{% url 'game:campaign_management:chapter_delete' campaign.id chapter.id %}" class="button">Delete Chapter</a>
+    <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Back to Campaign</a>
+</div>
+{% endblock %}

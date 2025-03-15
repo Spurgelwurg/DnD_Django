@@ -1,0 +1,71 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Add Characters to "{{ campaign.name }}"</h1>
+
+{% if available_characters %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="available-characters">
+            <p>Select the characters you want to add to this campaign:</p>
+            
+            {% for character in available_characters %}
+            <div class="character-selection">
+                <input type="checkbox" id="char_{{ character.id }}" name="characters" value="{{ character.id }}">
+                <label for="char_{{ character.id }}">
+                    {{ character.name }} - Level {{ character.level }} {{ character.character_class }} {{ character.race }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="button">Add Selected Characters</button>
+            <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Cancel</a>
+        </div>
+    </form>
+{% else %}
+    <div class="empty-state">
+        <p>You don't have any characters that can be added to this campaign.</p>
+        <a href="{% url 'game:character_management:character_create' %}" class="button">Create a New Character</a>
+        <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Back to Campaign</a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .character-selection {
+        background: white;
+        padding: 12px 15px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .character-selection label {
+        display: inline;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+    
+    .available-characters {
+        margin: 20px 0;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 30px 0;
+    }
+    
+    .empty-state .button {
+        margin: 10px;
+    }
+</style>
+{% endblock %}

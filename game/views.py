@@ -15,7 +15,10 @@ def indexView(request):
 class LoginView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
         form = RegisterForm()
-        return render(request, 'game/login.html', {'form': form})
+        return render(request, 'game/login.html', {
+            'form': form,
+            'attempted_login': False  # Add this flag
+        })
 
     def post(self, request: HttpRequest) -> HttpResponse:
         username = request.POST.get('username')
@@ -26,23 +29,33 @@ class LoginView(generic.View):
             login(request, user)
             return redirect('game:index')
         else:
-            return render(request, "game/login.html", {'error': 'Invalid username or password'})
+            return render(request, "game/login.html", {
+                'error': 'Invalid username or password',
+                'attempted_login': True  # Set flag to true on failed attempt
+            })
 
 class RegisterView(generic.View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        form = RegisterForm(request.POST)
+        form = RegisterForm()
         form_submitted = False
         return render(request, 'game/register.html', {'form': form, 'form_submitted': form_submitted})
 
     def post(self, request: HttpRequest):
         form = RegisterForm(request.POST)
+        form_submitted = True
         if form.is_valid():
             form.save()
             messages.success(request, 'Registration successful. You can now log in.')
             return redirect('game:login')  # Redirect to login page after successful registration
         else:
-            messages.error(request, 'Registration failed. Please correct the errors below.')
-        form_submitted = True
+            # If form has errors, display them to the user
+            for field, errors in form.errors.items():
+                for error in errors:
+                    if field == '__all__':
+                        messages.error(request, str(error))
+                    else:
+                        messages.error(request, f"{field}: {error}")
+        
         return render(request, 'game/register.html', {'form': form, 'form_submitted': form_submitted})
 
 def logout_view(request):

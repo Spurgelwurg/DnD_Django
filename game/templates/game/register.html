@@ -22,6 +22,11 @@
             padding: 0 !important; /* Space between error messages */
         }
 
+        .error-message {
+            color: red;
+            margin-top: 3px;
+            margin-bottom: 8px;
+        }
       
     </style>
 {% endblock %}
@@ -44,16 +49,18 @@
         {% csrf_token %}
         <div class="centered-wrapper">
             {% if form.non_field_errors and form_submitted %}
-                {{ form.non_field_errors }}
+                <div class="error-message">{{ form.non_field_errors }}</div>
             {% endif %}
             <div>
                 {% for field in form %}
-                <div>
+                <div class="form-field">
                     {{ field.label_tag }}
                     {{ field }}
-                    {% for error in field.errors %}
-                        <div style="color:red;">{{ error }}</div>
-                    {% endfor %}
+                    {% if form_submitted and field.errors %}
+                        {% for error in field.errors %}
+                            <div class="error-message">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
