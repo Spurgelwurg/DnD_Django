@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from .models import Campaign, CampaignPlayer
+
+from .models import Character
+from .models import Campaign, CampaignCharacter, CampaignPlayer
 from .forms import CampaignForm
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
@@ -301,4 +303,54 @@ def leave_campaign(request, campaign_id):
 
     return render(request, 'game/campaign_management/leave_campaign.html', {
         'campaign': campaign
+    })
+
+@login_required
+def add_character_to_campaign(request, campaign_id):
+    campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    if not CampaignPlayer.objects.filter(user=request.user, campaign=campaign).exists():
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+        
+    # Get user's characters that are not already in this campaign
+    existing_character_ids = CampaignCharacter.objects.filter(
+        campaign=campaign
+    ).values_list('character_id', flat=True)
+    
+    available_characters = Character.objects.filter(
+        user=request.user
+    ).exclude(
+        id__in=existing_character_ids
+    )
+    
+    if request.method == 'POST':
+        character_ids = request.POST.getlist('characters')
+        
+        if not character_ids:
+            messages.warning(request, "No characters selected.")
+            return redirect('game:campaign_management:add_character_to_campaign', campaign_id=campaign.id)
+            
+        characters_added = 0
+        for char_id in character_ids:
+            try:
+                character = Character.objects.get(id=char_id, user=request.user)
+                CampaignCharacter.objects.create(
+                    campaign=campaign,
+                    character=character,
+                    is_player_character=True
+                )
+                characters_added += 1
+            except Character.DoesNotExist:
+                continue
+                
+        if characters_added > 0:
+            messages.success(request, f"Successfully added {characters_added} character(s) to the campaign.")
+        
+        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    
+    return render(request, 'game/campaign_management/add_character_to_campaign.html', {
+        'campaign': campaign,
+        'available_characters': available_characters
     })

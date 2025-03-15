@@ -19,8 +19,8 @@
         {% endif %}
 
         <div class="action-buttons">
-            <a href="{% url 'game:campaign_management:campaign_edit' campaign.id %}" class="button">Edit Campaign</a>
             {% if is_game_master %}
+                <a href="{% url 'game:campaign_management:campaign_edit' campaign.id %}" class="button">Edit Campaign</a>
                 <a href="{% url 'game:campaign_management:manage_players' campaign.id %}" class="button">Manage
                     Players</a>
                 <a href="{% url 'game:campaign_management:campaign_delete' campaign.id %}" class="button">Delete
@@ -62,6 +62,11 @@
     {% else %}
         <p>No characters in this campaign yet.</p>
     {% endif %}
+    
+    {% if not is_game_master %}
+        <a href="{% url 'game:campaign_management:add_character_to_campaign' campaign.id %}" class="button">Add Your Character</a>
+    {% endif %}
+    
     <h2>Chapters</h2>
     <a href="{% url 'game:campaign_management:chapter_create' campaign.id %}" class="button">Add Chapter</a>
 

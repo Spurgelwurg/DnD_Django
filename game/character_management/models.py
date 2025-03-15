@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings  # Import settings to access AUTH_USER_MODEL
 
 
 class Race(models.Model):
@@ -37,6 +38,7 @@ class CharacterClass(models.Model):
 
 
 class Character(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='characters', null=True)
     name = models.CharField(max_length=100)
     race = models.ForeignKey(Race, on_delete=models.SET_NULL, null=True)
     subrace = models.ForeignKey(SubRace, on_delete=models.SET_NULL, null=True, blank=True)
