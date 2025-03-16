@@ -1,0 +1,179 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<h1>Manage Players - {{ campaign.name }}</h1>
+
+<div class="campaign-details">
+    <p><strong>Players:</strong> {{ campaign.current_player_count }} / {{ campaign.max_players }}</p>
+    {% if campaign.spots_remaining > 0 %}
+        <p><strong>Spots Remaining:</strong> {{ campaign.spots_remaining }}</p>
+    {% else %}
+        <p class="warning"><strong>Campaign is full</strong></p>
+    {% endif %}
+    
+    <div class="join-code-section">
+        <h3>Join Code</h3>
+        <p>Share this code with players to invite them:</p>
+        <div class="join-code">{{ campaign.join_code }}</div>
+        <p class="copy-hint">Click to copy</p>
+    </div>
+</div>
+
+<h2>Current Players</h2>
+<div class="player-list-container">
+    <table class="player-table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+                <tr>
+                    <td>{{ player.user.username }}</td>
+                    <td>
+                        {% if player.is_game_master %}
+                            <span class="gm-badge">Game Master</span>
+                        {% else %}
+                            Player
+                        {% endif %}
+                    </td>
+                    <td>{{ player.date_joined|date:"M d, Y" }}</td>
+                    <td>
+                        {% if player.user == request.user %}
+                            <span class="disabled-action">You</span>
+                        {% elif player.is_game_master %}
+                            <span class="disabled-action">Cannot remove GM</span>
+                        {% else %}
+                            <form method="post" class="inline-form" onsubmit="return confirm('Are you sure you want to remove {{ player.user.username }} from the campaign?');">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="remove">
+                                <input type="hidden" name="player_id" value="{{ player.id }}">
+                                <button type="submit" class="danger-button">Remove</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="action-buttons">
+    <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Back to Campaign</a>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .player-list-container {
+        margin: 20px 0;
+    }
+
+    .player-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .player-table th,
+    .player-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #efefef;
+    }
+
+    .player-table th {
+        background-color: #f8f8f8;
+        font-weight: bold;
+    }
+
+    .player-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .gm-badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        font-size: 0.85em;
+    }
+
+    .danger-button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+
+    .danger-button:hover {
+        background-color: #c0392b;
+    }
+
+    .disabled-action {
+        color: #7f8c8d;
+        font-style: italic;
+        font-size: 0.9em;
+    }
+
+    .inline-form {
+        display: inline;
+    }
+    
+    .warning {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .join-code-section {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        border: 1px dashed #ccc;
+    }
+    
+    .join-code {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #2c3e50;
+        letter-spacing: 2px;
+    }
+    
+    .copy-hint {
+        text-align: center;
+        color: #666;
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const joinCodeElement = document.querySelector('.join-code');
+        if (joinCodeElement) {
+            joinCodeElement.addEventListener('click', function() {
+                navigator.clipboard.writeText(this.textContent.trim()).then(() => {
+                    alert('Join code copied to clipboard!');
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -55,10 +55,12 @@
                             </a>                     
                             {% if campaign_char.character.user == request.user %}
                                 <span class="ownership-badge">Your Character</span>
+                            {% elif campaign_char.is_player_character %}
+                                <span class="pc-badge">PC</span>
+                                <span class="player-name">{{ campaign_char.character.user.username }}</span>
                             {% else %}
                                 <span class="npc-badge">NPC</span>
                             {% endif %}
-                            <span class="owner-badge">{{ campaign_char.character.user.username }}</span>
                         </div>
                         
                         <div class="character-actions">
@@ -80,7 +82,9 @@
     {% endif %}
     
     <h2>Chapters</h2>
-    <a href="{% url 'game:campaign_management:chapter_create' campaign.id %}" class="button">Add Chapter</a>
+    {% if is_game_master %}
+        <a href="{% url 'game:campaign_management:chapter_create' campaign.id %}" class="button">Add Chapter</a>
+    {% endif %}
 
     {% if campaign.chapters.exists %}
         <ul class="chapter-list">
