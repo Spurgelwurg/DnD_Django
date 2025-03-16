@@ -4,16 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}D&D Character Manager{% endblock %}</title>
-    <style>
-        /* Base styling */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
+    <style> 
+
+/* Base styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+/* Auth styling */
+        .login-container{
+            font-family: "Libre Baskerville", serif;
+            font-weight: 400;
+            font-style: normal;
+            background-color: #262626;
+            height: 100vh;
+            justify-content: center;
+            left: 0;
+            top: 0;
+            position: absolute;
+            
+        }
+        .login-header {
+            text-align: center;
+            color: #d61212;
+            font-size: 62px;
+            margin: 0;
+            text-shadow: 2px 1px 0px rgba(255, 255, 255, 1);
+        }
+        .login-subheader {
+            color: white;
+            font-size: 42px; 
+            margin: 0;
+            text-shadow: 2px 1px 0px #d61212;
+        }
+
+        .login-form {
+            box-shadow: 4px 4px 0px #811212;;
         }
 
         /* Navigation */
@@ -227,6 +259,21 @@
             padding: 2px 6px;
             border-radius: 3px;
             margin-left: 5px;
+        }
+
+
+        footer {
+            width: 100vw;
+            height: 60px;
+            position: absolute;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+            left: 0;
+            background-color: black;
+            color: white;
         }
     </style>
     {% block extra_head %}
