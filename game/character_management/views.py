@@ -91,7 +91,12 @@ def character_edit(request, character_id):
         form = CharacterForm(request.POST, instance=character)
         if form.is_valid():
             form.save()
-            return redirect('game:character_management:character_detail', character_id=character.id)
+            # Check if we should redirect back to a campaign
+            from_campaign = request.GET.get('from_campaign') or request.POST.get('from_campaign')
+            if from_campaign:
+                return redirect('game:campaign_management:campaign_detail', campaign_id=from_campaign)
+            else:
+                return redirect('game:character_management:character_detail', character_id=character.id)
     else:
         form = CharacterForm(instance=character)
 

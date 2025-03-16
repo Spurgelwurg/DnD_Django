@@ -3,7 +3,6 @@
 {% block content %}
     <div class="campaign-breadcrumb">
         <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}">Back to {{ campaign.name }}</a>
-     
     </div>
 
   
@@ -12,7 +11,7 @@
         <span class="player-name">Player: {{ character.user.username }}</span>
         {% if is_game_master or request.user == character.user %}
             <br/>
-            <a href="{% url 'game:character_management:character_edit' character.id %}" class="edit-button" style="color: white;">Edit Character</a>
+            <a href="{% url 'game:character_management:character_edit' character.id %}?from_campaign={{ campaign.id }}" class="edit-button" style="color: white;">Edit Character</a>
         {% endif %}
     </div>
 
