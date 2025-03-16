@@ -38,8 +38,10 @@
             </div>
 
             <div class="character-actions">
-                <a href="{% url 'game:character_management:character_edit' character.id %}" class="button">Edit</a>
-                <a href="{% url 'game:character_management:character_delete' character.id %}" class="button">Delete</a>
+                {% if request.user == character.user %}
+                    <a href="{% url 'game:character_management:character_edit' character.id %}" class="button">Edit</a>
+                    <a href="{% url 'game:character_management:character_delete' character.id %}" class="button">Delete</a>
+                {% endif %}
                 <a href="{% url 'game:character_management:character_list' %}" class="button">Back to List</a>
             </div>
         </div>

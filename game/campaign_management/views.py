@@ -354,3 +354,28 @@ def add_character_to_campaign(request, campaign_id):
         'campaign': campaign,
         'available_characters': available_characters
     })
+
+@login_required
+def view_character_stats(request, campaign_id, character_id):
+    campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Verify the user is part of this campaign
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+    
+    # Get the campaign character to verify it's part of this campaign
+    campaign_character = get_object_or_404(CampaignCharacter, 
+                                          campaign=campaign,
+                                          character_id=character_id)
+    
+    character = campaign_character.character
+    
+    return render(request, 'game/campaign_management/view_character_stats.html', {
+        'campaign': campaign,
+        'character': character,
+        'campaign_character': campaign_character,
+        'is_game_master': player.is_game_master,
+    })

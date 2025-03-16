@@ -42,20 +42,32 @@
         {% endfor %}
     </ul>
 
-    <h2>Characters</h2>
+   <h2>Characters</h2>
     {% if characters %}
         <ul class="character-list">
             {% for campaign_char in characters %} 
                 <li>
-                    <a href="{% url 'game:character_management:character_detail' campaign_char.character.id %}">
-                        {{ campaign_char.character.name }}
-                        ({{ campaign_char.character.character_class.name }})
-                    </a>
-                    {% if campaign_char.is_player_character %}
-                        <span class="pc-badge">PC</span>
-                    {% else %}
-                        <span class="npc-badge">NPC</span>
-                    {% endif %}
+                    <div class="character-entry">
+                        <div class="character-info">
+                            <a href="{% url 'game:character_management:character_detail' campaign_char.character.id %}">
+                                {{ campaign_char.character.name }}
+                                ({{ campaign_char.character.character_class.name }})
+                            </a>                     
+                            {% if campaign_char.character.user == request.user %}
+                                <span class="ownership-badge">Your Character</span>
+                            {% else %}
+                                <span class="npc-badge">NPC</span>
+                            {% endif %}
+                            <span class="owner-badge">{{ campaign_char.character.user.username }}</span>
+                        </div>
+                        
+                        <div class="character-actions">
+                            {% if is_game_master %}
+                                <a href="{% url 'game:campaign_management:view_character_stats' campaign.id campaign_char.character.id %}" 
+                                   class="view-stats-button">View Stats</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
@@ -162,6 +174,35 @@
             border-radius: 3px;
             margin-left: 5px;
             font-size: 0.8em;
+        }
+        
+        .character-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .view-stats-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            text-decoration: none;
+        }
+        
+        .view-stats-button:hover {
+            background-color: #27ae60;
+        }
+
+        .ownership-badge {
+            background-color: #2ecc71;
+            color: white;
+            font-size: 0.8em;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 5px;
         }
     </style>
     

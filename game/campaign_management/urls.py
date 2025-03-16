@@ -17,4 +17,5 @@ urlpatterns = [
     path('<int:campaign_id>/players/', views.manage_players, name='manage_players'),
     path('<int:campaign_id>/leave/', views.leave_campaign, name='leave_campaign'),
     path('campaigns/<int:campaign_id>/add-character/', views.add_character_to_campaign, name='add_character_to_campaign'),
+    path('campaigns/<int:campaign_id>/characters/<int:character_id>/stats/', views.view_character_stats, name='view_character_stats'),
 ]

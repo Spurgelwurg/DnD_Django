@@ -12,10 +12,21 @@
                 <a href="{% url 'game:character_management:character_detail' character.id %}">
                     {{ character.name }} - Level {{ character.level }} {{ character.character_class }} {{ character.race }}
                 </a>
+                
             </li>
         {% endfor %}
     </ul>
 {% else %}
     <p>No characters available. Create one!</p>
 {% endif %}
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .character-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+</style>
 {% endblock %}

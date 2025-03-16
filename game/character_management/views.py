@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.generic import ListView
 from .models import Character, Race, SubRace, CharacterClass
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,6 +11,9 @@ class CharacterListView(LoginRequiredMixin, ListView):
     model = Character
     template_name = 'game/character_management/character_list.html'
     context_object_name = 'characters'
+    
+    def get_queryset(self):
+        return Character.objects.filter(user=self.request.user)
 
 @login_required(login_url='game:login')
 def character_create(request):
@@ -62,6 +65,27 @@ def get_subrace(request):
 @login_required(login_url='game:login')
 def character_edit(request, character_id):
     character = get_object_or_404(Character, id=character_id)
+    
+    # Check if user is owner of the character
+    if character.user != request.user:
+        # Check if user is GM in a campaign that contains this character
+        from game.campaign_management.models import CampaignPlayer, CampaignCharacter
+        is_gm = False
+        
+        # Get campaigns that have this character
+        character_campaigns = CampaignCharacter.objects.filter(character=character)
+        for campaign_char in character_campaigns:
+            # Check if requesting user is GM in this campaign
+            if CampaignPlayer.objects.filter(
+                user=request.user,
+                campaign=campaign_char.campaign,
+                is_game_master=True
+            ).exists():
+                is_gm = True
+                break
+        
+        if not is_gm:
+            return HttpResponseForbidden("You don't have permission to edit this character.")
 
     if request.method == 'POST':
         form = CharacterForm(request.POST, instance=character)
@@ -114,6 +138,10 @@ def get_class_details(request):
 @login_required(login_url='game:login')
 def character_delete(request, character_id):
     character = get_object_or_404(Character, id=character_id)
+    
+    # Only character owner can delete
+    if character.user != request.user:
+        return HttpResponseForbidden("You don't have permission to delete this character.")
 
     if request.method == 'POST':
         character.delete()

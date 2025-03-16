@@ -1,0 +1,267 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+    <div class="campaign-breadcrumb">
+        <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}">Back to {{ campaign.name }}</a>
+    </div>
+
+    <div class="character-page-layout">
+        <!-- Character header with campaign context -->
+        <div class="character-header">
+            <h1>{{ character.name }}</h1>
+            <div class="character-role-tag">
+                {% if campaign_character.is_player_character %}
+                    <span class="pc-badge">PC</span>
+                {% else %}
+                    <span class="npc-badge">NPC</span>
+                {% endif %}
+                <span class="player-name">Player: {{ character.user.username }}</span>
+            </div>
+            
+            {% if is_game_master or request.user == character.user %}
+            <div class="character-actions">
+                <a href="{% url 'game:character_management:character_edit' character.id %}" class="button">Edit Character</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Left column - Character details -->
+        <div class="character-main-info">
+            <div class="character-details">
+                <div class="basic-info">
+                    <p><strong>Race:</strong>
+                        {{ character.race }}{% if character.subrace %} ({{ character.subrace }}){% endif %}</p>
+                    <p><strong>Class:</strong> {{ character.character_class }}</p>
+                    <p><strong>Level:</strong> {{ character.level }}</p>
+                </div>
+
+                <div class="ability-scores-card">
+                    <h3>Ability Scores</h3>
+                    <div class="stats-grid">
+                        <div class="stat-block">
+                            <div class="stat-name">STR</div>
+                            <div class="stat-value">{{ character.strength }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-name">DEX</div>
+                            <div class="stat-value">{{ character.dexterity }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-name">CON</div>
+                            <div class="stat-value">{{ character.constitution }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-name">INT</div>
+                            <div class="stat-value">{{ character.intelligence }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-name">WIS</div>
+                            <div class="stat-value">{{ character.wisdom }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-name">CHA</div>
+                            <div class="stat-value">{{ character.charisma }}</div>
+                            <div class="stat-modifier">{{ character.get_ability_modifier|default_if_none:0 }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if character.description %}
+                    <div class="character-description">
+                        <h3>Biography</h3>
+                        <p>{{ character.description }}</p>
+                    </div>
+                {% endif %}
+
+                {% if character.equipment %}
+                    <div class="equipment-section">
+                        <h3>Equipment</h3>
+                        <p>{{ character.equipment }}</p>
+                    </div>
+                {% endif %}
+                
+                {% if character.inventory %}
+                    <div class="inventory-section">
+                        <h3>Inventory</h3>
+                        <p>{{ character.inventory }}</p>
+                    </div>
+                {% endif %}
+                
+                {% if character.spells %}
+                    <div class="spells-section">
+                        <h3>Spells</h3>
+                        <p>{{ character.spells }}</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="gm-notes-section">
+                {% if is_game_master %}
+                    <h3>GM Notes</h3>
+                    <p class="gm-note-hint">Private notes about this character are visible only to you as the Game Master.</p>
+                    <div class="gm-note-placeholder">
+                        <textarea placeholder="Add private GM notes about this character (coming soon)" disabled></textarea>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right column - Race and Class details -->
+        <div class="character-race-class-details">
+            <div class="race-details details-box">
+                <h3>{{ character.race.name }}</h3>
+                <p>{{ character.race.description }}</p>
+                <ul>
+                    <li><strong>Ability Scores:</strong> {{ character.race.ability_scores }}</li>
+                    <li><strong>Size:</strong> {{ character.race.size }}</li>
+                    <li><strong>Speed:</strong> {{ character.race.speed }}</li>
+                    <li><strong>Languages:</strong> {{ character.race.languages }}</li>
+                </ul>
+                <p><strong>Traits:</strong> {{ character.race.traits }}</p>
+
+                {% if character.subrace %}
+                    <div class="subrace-details">
+                        <h4>{{ character.subrace.name }}</h4>
+                        {% if character.subrace.additional_traits %}
+                            <p><strong>Additional Traits:</strong> {{ character.subrace.additional_traits }}</p>
+                        {% endif %}
+                        {% if character.subrace.additional_ability_scores %}
+                            <p><strong>Additional Ability
+                                Scores:</strong> {{ character.subrace.additional_ability_scores }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="class-details details-box">
+                <h3>{{ character.character_class.name }}</h3>
+                <p>{{ character.character_class.description }}</p>
+                <ul>
+                    <li><strong>Primary Ability:</strong> {{ character.character_class.primary_ability }}</li>
+                    <li><strong>Hit Die:</strong> {{ character.character_class.hit_die }}</li>
+                    <li><strong>Saving Throws:</strong> {{ character.character_class.saving_throws }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .campaign-breadcrumb {
+            margin-bottom: 20px;
+        }
+        
+        .campaign-breadcrumb a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .character-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .character-role-tag {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .player-name {
+            font-style: italic;
+            color: #666;
+        }
+        
+        .character-page-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .stat-block {
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .stat-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .stat-modifier {
+            font-size: 0.9em;
+            color: #3498db;
+        }
+        
+        .stat-modifier::before {
+            content: "(";
+        }
+        
+        .stat-modifier::after {
+            content: ")";
+        }
+        
+        .ability-scores-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gm-note-placeholder textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .gm-note-hint {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        
+        .character-actions {
+            margin-top: 15px;
+            text-align: right;
+        }
+        
+        @media (max-width: 768px) {
+            .character-page-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+{% endblock %}
