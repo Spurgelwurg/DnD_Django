@@ -1,6 +1,7 @@
 from django.db import models
 
-from DnD_Django import settings
+
+from django.conf import settings
 from game.character_management.models import Character
 import uuid
 from django.contrib.auth.models import User
