@@ -53,7 +53,7 @@
                         ({{ campaign_char.character.character_class.name }})
                         {% if campaign_char.character.user == request.user %}
                             <span class="ownership-badge">Your Character</span>
-                        {% elif campaign_char.is_player_character %}
+                        {% elif campaign_char.character.is_player_character %}
                             <span class="pc-badge">PC</span>
                             <span class="player-name">{{ campaign_char.character.user.username }}</span>
                         {% else %}
@@ -63,6 +63,12 @@
                     
                     <div class="character-actions">
                         <a href="{% url 'game:campaign_management:view_character_stats' campaign.id campaign_char.character.id %}" class="view-stats-button">View Character Stats</a>
+                        {% if is_game_master or campaign_char.character.user == request.user %}
+                        <form method="post" action="{% url 'game:campaign_management:remove_character' campaign.id campaign_char.character.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-character-button">Remove Character</button>
+                        </form>
+                    {% endif %}
                     </div>
                 </div>
             </li>
@@ -72,9 +78,13 @@
         <p>No characters in this campaign yet.</p>
     {% endif %}
     
-    {% if not is_game_master %}
-        <a href="{% url 'game:campaign_management:add_character_to_campaign' campaign.id %}" class="button">Add Your Character</a>
-    {% endif %}
+    <div class="character-actions">
+        {% if not is_game_master %}
+            <a href="{% url 'game:campaign_management:add_character_to_campaign' campaign.id %}" class="button">Add Your Character</a>
+        {% else %}           
+            <a href="{% url 'game:campaign_management:add_npc_to_campaign' campaign.id %}" class="button">Add NPC</a>
+        {% endif %}
+    </div>
     
     <h2>Chapters</h2>
     {% if is_game_master %}

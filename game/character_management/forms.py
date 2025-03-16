@@ -22,7 +22,7 @@ class CharacterForm(forms.ModelForm):
         fields = ['name', 'race', 'character_class', 'level',
                   'strength', 'dexterity', 'constitution',
                   'intelligence', 'wisdom', 'charisma',
-                  'description', 'equipment', 'inventory', 'spells']
+                  'description', 'equipment', 'inventory', 'spells', 'is_player_character']
 
     subrace = forms.ModelChoiceField(queryset=SubRace.objects.none(), required=False)
 

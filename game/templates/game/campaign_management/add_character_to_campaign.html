@@ -1,13 +1,13 @@
 {% extends 'game/base_menu.html' %}
 
 {% block content %}
-<h1>Add Characters to "{{ campaign.name }}"</h1>
+<h1>{% if is_npc %}Add NPCs{% else %}Add Characters{% endif %} to "{{ campaign.name }}"</h1>
 
 {% if available_characters %}
     <form method="post">
         {% csrf_token %}
         <div class="available-characters">
-            <p>Select the characters you want to add to this campaign:</p>
+            <p>Select the {% if is_npc %}NPCs{% else %}characters{% endif %} you want to add to this campaign:</p>
             
             {% for character in available_characters %}
             <div class="character-selection">
@@ -20,13 +20,13 @@
         </div>
         
         <div class="form-actions">
-            <button type="submit" class="button">Add Selected Characters</button>
+            <button type="submit" class="button">Add Selected {% if is_npc %}NPCs{% else %}Characters{% endif %}</button>
             <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Cancel</a>
         </div>
     </form>
 {% else %}
     <div class="empty-state">
-        <p>You don't have any characters that can be added to this campaign.</p>
+        <p>You don't have any {% if is_npc %}characters to use as NPCs{% else %}characters{% endif %} that can be added to this campaign.</p>
         <a href="{% url 'game:character_management:character_create' %}" class="button">Create a New Character</a>
         <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button">Back to Campaign</a>
     </div>
@@ -44,7 +44,7 @@
     }
     
     .character-selection label {
-        display: inline;
+        display: flex;
         margin-left: 8px;
         cursor: pointer;
     }

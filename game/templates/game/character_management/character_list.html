@@ -3,21 +3,56 @@
 {% block content %}
 <h1>Characters</h1>
 
-<a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
+<div class="character-section">
+    <div class="section-header">
+        <h2>Player Characters</h2>
+        <a href="{% url 'game:character_management:character_create' %}" class="button">Create New Character</a>
+    </div>
 
-{% if characters %}
-    <ul class="character-list">
-        {% for character in characters %}
+    {% if characters %}
+        <ul class="character-list">
+            {% for character in characters %}
+                <li>
+                    <a href="{% url 'game:character_management:character_detail' character.id %}">
+                        {{ character.name }} - Level {{ character.level }} {{ character.character_class }} {{ character.race }}
+                    </a>
+                    {% if character.campaigncharacter_set.exists %}
+                        {% for campaign_char in character.campaigncharacter_set.all %}
+                            {% if campaign_char.is_npc %}
+                                <span class="npc-badge">NPC</span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No characters available. Create one!</p>
+    {% endif %}
+</div>
+
+{% if is_game_master and npcs %}
+<div class="npc-section">
+    <div class="section-header">
+        <h2>Non-Player Characters</h2>
+        <span class="gm-badge">Game Master Only</span>
+    </div>
+    
+    <ul class="character-list npc-list">
+        {% for npc in npcs %}
             <li>
-                <a href="{% url 'game:character_management:character_detail' character.id %}">
-                    {{ character.name }} - Level {{ character.level }} {{ character.character_class }} {{ character.race }}
-                </a>
-                
+                <div class="npc-entry">
+                    <span class="npc-name">{{ npc.name }}</span>
+                    <span class="npc-details">Level {{ npc.level }} {{ npc.race }}</span>
+                    <div class="npc-actions">
+                        <a href="{% url 'game:character_management:character_edit' npc.id %}" class="edit-npc">Edit</a>
+                        <a href="{% url 'game:character_management:character_delete' npc.id %}" class="delete-npc">Delete</a>
+                    </div>
+                </div>
             </li>
         {% endfor %}
     </ul>
-{% else %}
-    <p>No characters available. Create one!</p>
+</div>
 {% endif %}
 {% endblock %}
 
@@ -27,6 +62,94 @@
         display: flex;
         align-items: center;
         margin-bottom: 8px;
+    }
+    
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .character-section, .npc-section {
+        margin-bottom: 30px;
+    }
+    
+    .npc-section {
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+        margin-top: 30px;
+    }
+    
+    .gm-badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8em;
+    }
+    
+    .npc-list li {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-left: 3px solid #e74c3c;
+        margin-bottom: 10px;
+        border-radius: 0 4px 4px 0;
+    }
+    
+    .npc-entry {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .npc-name {
+        font-weight: bold;
+    }
+    
+    .npc-details {
+        color: #666;
+    }
+    
+    .view-npc {
+        background-color: #3498db;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 3px;
+        text-decoration: none;
+        font-size: 0.8em;
+    }
+    
+    .npc-actions {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .edit-npc, .delete-npc {
+        padding: 3px 8px;
+        border-radius: 3px;
+        text-decoration: none;
+        font-size: 0.8em;
+        color: white;
+    }
+    
+    .edit-npc {
+        background-color: #3498db;
+    }
+    
+    .delete-npc {
+        background-color: #e74c3c;
+    }
+
+    .npc-badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 0.7em;
+        margin-left: 5px;
+        vertical-align: middle;
     }
 </style>
 {% endblock %}

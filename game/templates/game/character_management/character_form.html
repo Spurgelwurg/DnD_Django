@@ -5,13 +5,15 @@
 
     <form method="post">
         {% csrf_token %}
-
+        {# Basic Info #}
         <div class="form-section">
             <h3>Basic Info</h3>
             <label for="id_name">Name:</label>
             {{ form.name }}
+            <div class="error-message">{{ form.name.errors }}</div>
         </div>
 
+        {# Race Section #}
         <div class="form-section">
             <h3>Race</h3>
             <label for="id_race">Race:</label>
@@ -21,6 +23,7 @@
                     <option value="{{ race.id }}">{{ race.name }}</option>
                 {% endfor %}
             </select>
+            <div class="error-message">{{ form.race.errors }}</div>
 
             <div id="race_details" class="race-details"></div>
 
@@ -28,8 +31,10 @@
             <select name="subrace" id="id_subrace">
                 <option value="">Select a race first</option>
             </select>
+            <div class="error-message">{{ form.subrace.errors }}</div>
         </div>
 
+        {# Class Section #}
         <div class="form-section">
             <h3>Class</h3>
             <label for="id_character_class">Class:</label>
@@ -40,8 +45,10 @@
                 {% endfor %}
             </select>
             <div id="class_details" class="class-details"></div>
+            <div class="error-message">{{ form.character_class.errors }}</div>
         </div>
 
+        {# Ability Scores Section #}
         <div class="form-section">
             <h3>Ability Scores</h3>
             <button type="button" id="roll-ability-scores" class="button">Roll Ability Scores (3d6 x6)</button>
@@ -61,6 +68,7 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.strength.errors }}</div>
                 </div>
                 <div>
                     <label for="id_dexterity">Dexterity:</label>
@@ -71,6 +79,7 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.dexterity.errors }}</div>
                 </div>
                 <div>
                     <label for="id_constitution">Constitution:</label>
@@ -81,6 +90,7 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.constitution.errors }}</div>
                 </div>
                 <div>
                     <label for="id_intelligence">Intelligence:</label>
@@ -91,6 +101,7 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.intelligence.errors }}</div>
                 </div>
                 <div>
                     <label for="id_wisdom">Wisdom:</label>
@@ -101,6 +112,7 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.wisdom.errors }}</div>
                 </div>
                 <div>
                     <label for="id_charisma">Charisma:</label>
@@ -111,31 +123,38 @@
                             <option value="">Assign a roll</option>
                         </select>
                     </div>
+                    <div class="error-message">{{ form.charisma.errors }}</div>
                 </div>
             </div>
         </div>
 
+        {# Additional Info Section #}
         <div class="form-section">
             <h3>Additional Info</h3>
             <div>
                 <label for="id_level">Level:</label>
                 {{ form.level }}
+                <div class="error-message">{{ form.level.errors }}</div>
             </div>
             <div>
                 <label for="id_description">Character Biography:</label>
                 {{ form.description }}
+                <div class="error-message">{{ form.description.errors }}</div>
             </div>
             <div>
                 <label for="id_equipment">Equipment:</label>
                 {{ form.equipment }}
+                <div class="error-message">{{ form.equipment.errors }}</div>
             </div>
             <div>
                 <label for="id_inventory">Inventory:</label>
                 {{ form.inventory }}
+                <div class="error-message">{{ form.inventory.errors }}</div>
             </div>
             <div>
                 <label for="id_spells">Spells:</label>
                 {{ form.spells }}
+                <div class="error-message">{{ form.spells.errors }}</div>
             </div>
         </div>
 
@@ -150,7 +169,6 @@
             gap: 10px;
             margin-top: 5px;
         }
-
         .ability-input-group input {
             flex: 1;
             color: #000;
@@ -158,40 +176,38 @@
             font-size: 16px;
             min-width: 60px;
         }
-
         .ability-input-group select {
             flex: 1;
         }
-
         .dice-roll {
             padding: 10px;
             margin-bottom: 10px;
             background-color: #f0f0f0;
             border-radius: 5px;
         }
-
         .used {
             opacity: 0.7;
         }
-
         .assigned-to {
             color: #555;
             font-style: italic;
             margin-left: 5px;
         }
-
         .calculation-display {
             color: #2c7fb8;
             font-size: 0.9em;
             margin-bottom: 5px;
             min-height: 1.5em;
         }
-
         .warning {
             color: #e74c3c;
             font-weight: bold;
         }
-
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 3px;
+        }
         /* Add spacing between ability score sections */
         .ability-scores > div {
             margin-bottom: 15px;

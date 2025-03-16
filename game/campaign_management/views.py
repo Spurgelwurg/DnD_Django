@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Campaign, Chapter
 from .forms import CampaignForm, ChapterForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
 
 
 @login_required
@@ -306,7 +307,7 @@ def leave_campaign(request, campaign_id):
     })
 
 @login_required
-def add_character_to_campaign(request, campaign_id):
+def add_character_to_campaign(request, campaign_id, npc_char=False):
     campaign = get_object_or_404(Campaign, id=campaign_id)
     
     # Check if user is part of this campaign
@@ -338,22 +339,29 @@ def add_character_to_campaign(request, campaign_id):
                 character = Character.objects.get(id=char_id, user=request.user)
                 CampaignCharacter.objects.create(
                     campaign=campaign,
-                    character=character,
-                    is_player_character=True
+                    character=character,                   
                 )
                 characters_added += 1
             except Character.DoesNotExist:
                 continue
                 
         if characters_added > 0:
-            messages.success(request, f"Successfully added {characters_added} character(s) to the campaign.")
+            if npc_char:
+                messages.success(request, f"Successfully added {characters_added} NPC(s) to the campaign.")
+            else:
+                messages.success(request, f"Successfully added {characters_added} character(s) to the campaign.")
         
         return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
     
     return render(request, 'game/campaign_management/add_character_to_campaign.html', {
         'campaign': campaign,
-        'available_characters': available_characters
+        'available_characters': available_characters,
+        'is_npc': npc_char  # Pass the is_npc flag to the template
     })
+
+@login_required
+def add_npc_to_campaign(request, campaign_id):
+    return add_character_to_campaign(request, campaign_id, npc_char=True)
 
 @login_required
 def view_character_stats(request, campaign_id, character_id):
@@ -379,3 +387,38 @@ def view_character_stats(request, campaign_id, character_id):
         'campaign_character': campaign_character,
         'is_game_master': player.is_game_master,
     })
+
+@login_required
+def remove_character(request, campaign_id, character_id):
+    campaign = get_object_or_404(Campaign, id=campaign_id)
+    
+    # Check if user is part of this campaign
+    try:
+        player = CampaignPlayer.objects.get(user=request.user, campaign=campaign)
+    except CampaignPlayer.DoesNotExist:
+        messages.error(request, "You don't have access to this campaign.")
+        return redirect('game:campaign_management:campaign_list')
+    
+    # Get the campaign character entry
+    campaign_character = get_object_or_404(CampaignCharacter, 
+                                          campaign=campaign,
+                                          character_id=character_id)
+    
+    # Check if user is authorized to remove this character
+    # (either the user is a GM or it's their own character)
+    if not (player.is_game_master or campaign_character.character.user == request.user):
+        messages.error(request, "You don't have permission to remove this character.")
+        return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)
+    
+    character_name = campaign_character.character.name
+    is_npc = not campaign_character.character.is_player_character
+    
+    if request.method == 'POST':
+        campaign_character.delete()
+        
+        if is_npc:
+            messages.success(request, f"The NPC '{character_name}' has been removed from the campaign.")
+        else:
+            messages.success(request, f"'{character_name}' has been removed from the campaign.")
+            
+    return redirect('game:campaign_management:campaign_detail', campaign_id=campaign.id)

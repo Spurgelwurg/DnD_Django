@@ -22,7 +22,7 @@ class CampaignSessionForm(forms.ModelForm):
 class CampaignCharacterForm(forms.ModelForm):
     class Meta:
         model = CampaignCharacter
-        fields = ['character', 'is_player_character']
+        fields = ['character']
 
 class ChapterForm(forms.ModelForm):
     class Meta:

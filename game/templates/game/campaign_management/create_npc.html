@@ -1,0 +1,251 @@
+{% extends 'game/base_menu.html' %}
+
+{% block content %}
+<div class="npc-creation-container">
+    <h1>Add NPC to "{{ campaign.name }}"</h1>
+    <p class="subtitle">Create a non-player character for your campaign</p>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            <h2>Basic Information</h2>
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="form-errors">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="create_as_npc" name="create_as_npc" checked>
+                <label for="create_as_npc">Create as NPC</label>
+            </div>
+            
+            <div class="form-row" id="character_class_container">
+                <div class="form-group">
+                    <label for="id_character_class">Class:</label>
+                    {{ form.character_class }}
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_race">Race:</label>
+                    {{ form.race }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_level">Level:</label>
+                {{ form.level }}
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_alignment">Alignment:</label>
+                    {{ form.alignment }}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_background">Background:</label>
+                    {{ form.background }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2>Ability Scores</h2>
+            <div class="ability-grid">
+                <div class="ability-score">
+                    <label for="id_strength">STR</label>
+                    {{ form.strength }}
+                </div>
+                <div class="ability-score">
+                    <label for="id_dexterity">DEX</label>
+                    {{ form.dexterity }}
+                </div>
+                <div class="ability-score">
+                    <label for="id_constitution">CON</label>
+                    {{ form.constitution }}
+                </div>
+                <div class="ability-score">
+                    <label for="id_intelligence">INT</label>
+                    {{ form.intelligence }}
+                </div>
+                <div class="ability-score">
+                    <label for="id_wisdom">WIS</label>
+                    {{ form.wisdom }}
+                </div>
+                <div class="ability-score">
+                    <label for="id_charisma">CHA</label>
+                    {{ form.charisma }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2>Description</h2>
+            <div class="form-group">
+                <label for="id_bio">Character Description:</label>
+                {{ form.bio }}
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="button">Create NPC</button>
+            <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}" class="button secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .npc-creation-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .subtitle {
+        color: #666;
+        margin-bottom: 25px;
+    }
+    
+    .form-section {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 25px;
+    }
+    
+    .form-section h2 {
+        margin-top: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .form-row .form-group {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #444;
+    }
+    
+    input[type="text"], 
+    input[type="number"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    textarea {
+        min-height: 120px;
+    }
+    
+    .ability-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .ability-score {
+        text-align: center;
+    }
+    
+    .ability-score label {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    
+    .ability-score input {
+        text-align: center;
+        font-size: 1.2em;
+        width: 60px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .button.secondary {
+        background-color: #95a5a6;
+    }
+    
+    .button.secondary:hover {
+        background-color: #7f8c8d;
+    }
+    
+    .form-errors {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+    }
+    
+    .checkbox-group label {
+        display: inline;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const npcCheckbox = document.getElementById('create_as_npc');
+        const classContainer = document.getElementById('character_class_container');
+        
+        // Initial state
+        if (npcCheckbox.checked) {
+            classContainer.style.display = 'none';
+        }
+        
+        // Handle checkbox changes
+        npcCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                classContainer.style.display = 'none';
+            } else {
+                classContainer.style.display = 'block';
+            }
+        });
+    });
+</script>
+{% endblock %}

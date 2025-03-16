@@ -64,8 +64,7 @@ class CampaignSession(models.Model):
 
 class CampaignCharacter(models.Model):
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, related_name="characters")
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
-    is_player_character = models.BooleanField(default=True)
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)    
 
     def __str__(self):
         return f"{self.character.name} in {self.campaign.name}"

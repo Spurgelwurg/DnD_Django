@@ -58,6 +58,8 @@ class Character(models.Model):
     equipment = models.TextField(blank=True)
     inventory = models.TextField(blank=True)
     spells = models.TextField(blank=True)
+    
+    is_player_character = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.name} - Level {self.level} {self.character_class} {self.race}"
