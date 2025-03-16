@@ -26,5 +26,7 @@ Wenn man die Anwendung testen möchte:
 - Eine Kampagne erstellen und Charaktere hinzufügen.
 - Den Code für die Kampagne kopieren und an die Spieler senden.
 - (Zu Simulationszwecken) Weitere Spieler anlegen und der Kampagne beitreten.
+- Mit "Dice Roller" würfeln und die Ergebnisse sehen.
+- Spaß haben!
 
 
