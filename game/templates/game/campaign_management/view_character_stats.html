@@ -3,28 +3,20 @@
 {% block content %}
     <div class="campaign-breadcrumb">
         <a href="{% url 'game:campaign_management:campaign_detail' campaign.id %}">Back to {{ campaign.name }}</a>
+     
+    </div>
+
+  
+    <div style="margin-bottom: 30px;">
+        <h1>{{ character.name }}</h1>    
+        <span class="player-name">Player: {{ character.user.username }}</span>
+        {% if is_game_master or request.user == character.user %}
+            <br/>
+            <a href="{% url 'game:character_management:character_edit' character.id %}" class="edit-button" style="color: white;">Edit Character</a>
+        {% endif %}
     </div>
 
     <div class="character-page-layout">
-        <!-- Character header with campaign context -->
-        <div class="character-header">
-            <h1>{{ character.name }}</h1>
-            <div class="character-role-tag">
-                {% if campaign_character.is_player_character %}
-                    <span class="pc-badge">PC</span>
-                {% else %}
-                    <span class="npc-badge">NPC</span>
-                {% endif %}
-                <span class="player-name">Player: {{ character.user.username }}</span>
-            </div>
-            
-            {% if is_game_master or request.user == character.user %}
-            <div class="character-actions">
-                <a href="{% url 'game:character_management:character_edit' character.id %}" class="button">Edit Character</a>
-            </div>
-            {% endif %}
-        </div>
-
         <!-- Left column - Character details -->
         <div class="character-main-info">
             <div class="character-details">
@@ -100,7 +92,7 @@
                 {% endif %}
             </div>
 
-            <div class="gm-notes-section">
+           {% comment %}  <div class="gm-notes-section">
                 {% if is_game_master %}
                     <h3>GM Notes</h3>
                     <p class="gm-note-hint">Private notes about this character are visible only to you as the Game Master.</p>
@@ -108,7 +100,7 @@
                         <textarea placeholder="Add private GM notes about this character (coming soon)" disabled></textarea>
                     </div>
                 {% endif %}
-            </div>
+            </div> {% endcomment %}
         </div>
 
         <!-- Right column - Race and Class details -->
@@ -160,6 +152,30 @@
         .campaign-breadcrumb a {
             color: #3498db;
             text-decoration: none;
+        }
+
+        .top-left-action {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .edit-button {
+            display: inline-block;
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #2980b9;
         }
         
         .character-header {

@@ -46,31 +46,26 @@
     {% if characters %}
         <ul class="character-list">
             {% for campaign_char in characters %} 
-                <li>
-                    <div class="character-entry">
-                        <div class="character-info">
-                            <a href="{% url 'game:character_management:character_detail' campaign_char.character.id %}">
-                                {{ campaign_char.character.name }}
-                                ({{ campaign_char.character.character_class.name }})
-                            </a>                     
-                            {% if campaign_char.character.user == request.user %}
-                                <span class="ownership-badge">Your Character</span>
-                            {% elif campaign_char.is_player_character %}
-                                <span class="pc-badge">PC</span>
-                                <span class="player-name">{{ campaign_char.character.user.username }}</span>
-                            {% else %}
-                                <span class="npc-badge">NPC</span>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="character-actions">
-                            {% if is_game_master %}
-                                <a href="{% url 'game:campaign_management:view_character_stats' campaign.id campaign_char.character.id %}" 
-                                   class="view-stats-button">View Stats</a>
-                            {% endif %}
-                        </div>
+            <li>
+                <div class="character-entry">
+                    <div class="character-info">
+                        {{ campaign_char.character.name }}
+                        ({{ campaign_char.character.character_class.name }})
+                        {% if campaign_char.character.user == request.user %}
+                            <span class="ownership-badge">Your Character</span>
+                        {% elif campaign_char.is_player_character %}
+                            <span class="pc-badge">PC</span>
+                            <span class="player-name">{{ campaign_char.character.user.username }}</span>
+                        {% else %}
+                            <span class="npc-badge">NPC</span>
+                        {% endif %}
                     </div>
-                </li>
+                    
+                    <div class="character-actions">
+                        <a href="{% url 'game:campaign_management:view_character_stats' campaign.id campaign_char.character.id %}" class="view-stats-button">View Character Stats</a>
+                    </div>
+                </div>
+            </li>
             {% endfor %}
         </ul>
     {% else %}
