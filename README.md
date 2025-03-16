@@ -20,7 +20,7 @@ Django Project of a DnD Manager App
 
 6. Nach der Anmeldung kannst du deine Charaktere erstellen, Kampagnen verwalten und den integrierten Würfelroller verwenden.
 
-## Anleitung zur Benutzung
+## Kurzanleitung zur Benutzung
 Wenn man die Anwendung testen möchte:
 - Einen Charakter erstellen und diesem Werte zuteilen.
 - Eine Kampagne erstellen und Charaktere hinzufügen.
