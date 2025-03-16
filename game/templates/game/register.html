@@ -6,6 +6,8 @@
 {% block style %}
     {{ block.super }}
     <style>    
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+   
         .centered-wrapper {
             text-align: left;
             display: flex;
@@ -32,12 +34,12 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="register-container">
     <div style="display: flex; justify-content: center; align-items: center;">
-        <h2>Register</h2>
+        <h2 class="register-header">Register</h2>
     </div>
 
-    <form method="post">
+    <form class="register-form" method="post">
         {% csrf_token %}
         <div class="centered-wrapper">
             {% if form.non_field_errors and form_submitted %}
